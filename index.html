@@ -710,6 +710,98 @@
   .donut-legend .d-dot{width:8px; height:8px; border-radius:50%; flex-shrink:0;}
   .donut-legend .d-item .d-val{margin-left:auto; color:var(--ink); font-variant-numeric:tabular-nums;}
 
+  /* ---------- ecosystem diagram ---------- */
+  .eco{margin-top:30px;}
+  .eco-toggle{
+    display:inline-flex;
+    gap:4px;
+    padding:4px;
+    border-radius:999px;
+    background:var(--ground-2);
+    border:1px solid var(--line);
+    margin-bottom:18px;
+  }
+  .eco-btn{
+    font-family:var(--font-mono);
+    font-size:.72rem;
+    padding:9px 18px;
+    border-radius:999px;
+    border:none;
+    background:transparent;
+    color:var(--ink-faint);
+    cursor:pointer;
+    transition:background .25s var(--ease), color .25s var(--ease);
+  }
+  .eco-btn:hover{color:var(--ink);}
+  .eco-btn.active{background:var(--teal); color:var(--teal-ink); font-weight:600;}
+
+  .eco-svg{
+    display:block;
+    width:100%;
+    height:auto;
+    max-width:620px;
+    background:var(--ground-2);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:10px;
+  }
+  .eco-node rect{
+    fill:var(--ground-3);
+    stroke:var(--line);
+    stroke-width:1;
+    transition:fill .5s var(--ease), stroke .5s var(--ease);
+  }
+  .eco-node text{
+    font-family:var(--font-mono);
+    font-size:12px;
+    fill:var(--ink-faint);
+    transition:fill .5s var(--ease);
+  }
+  .eco-node{
+    transform:translate(var(--px), var(--py));
+    transition:transform .85s cubic-bezier(.66,0,.2,1);
+  }
+  .eco[data-state="ecosystem"] .eco-node{transform:translate(var(--ex), var(--ey));}
+  .eco[data-state="ecosystem"] .eco-node text{fill:var(--ink);}
+  .eco[data-state="ecosystem"] .eco-node.sw rect{stroke:var(--teal); fill:rgba(47,214,189,.1);}
+  .eco[data-state="ecosystem"] .eco-node.mk rect{stroke:var(--amber); fill:rgba(232,162,74,.1);}
+
+  .eco-links line{
+    stroke:var(--teal);
+    stroke-width:1.5;
+    opacity:0;
+    transition:opacity .5s var(--ease) .35s;
+  }
+  .eco-links line:nth-child(n+4){stroke:var(--amber);}
+  .eco[data-state="ecosystem"] .eco-links line{opacity:.45;}
+
+  .eco-hub{
+    transform:translate(280px, 160px);
+    opacity:0;
+    transition:opacity .5s var(--ease) .3s;
+  }
+  .eco-hub rect{fill:var(--teal); }
+  .eco-hub text{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:17px;
+    fill:var(--teal-ink);
+  }
+  .eco[data-state="ecosystem"] .eco-hub{opacity:1;}
+
+  .eco-caption{
+    margin-top:14px;
+    max-width:60ch;
+    font-size:.92rem;
+  }
+  @media (max-width:620px){
+    .eco-node text{font-size:15px;}
+    .eco-hub text{font-size:21px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .eco-node, .eco-links line, .eco-hub{transition:none;}
+  }
+
   /* ---------- vision/mission ---------- */
   .vm-grid{
     display:grid;
@@ -767,44 +859,46 @@
   /* ---------- services ---------- */
   .svc-intro{max-width:64ch; margin-top:18px;}
 
-  .svc-tracks{
+  .svc-filter{
     display:flex;
-    flex-direction:column;
-    gap:40px;
-    margin-top:36px;
-  }
-  .svc-track-head{
-    display:flex;
-    align-items:baseline;
-    gap:14px;
+    gap:8px;
     flex-wrap:wrap;
-    margin-bottom:16px;
+    margin-top:28px;
   }
-  .svc-track-head .kicker{
-    display:flex;
+  .svc-f{
+    display:inline-flex;
     align-items:center;
     gap:8px;
     font-family:var(--font-mono);
-    font-size:.68rem;
-    letter-spacing:.14em;
-    text-transform:uppercase;
+    font-size:.74rem;
+    padding:9px 16px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:var(--ground-2);
+    color:var(--ink-faint);
+    cursor:pointer;
+    transition:border-color .2s var(--ease), color .2s var(--ease), background .2s var(--ease);
+  }
+  .svc-f:hover{color:var(--ink); border-color:var(--ink-faint);}
+  .svc-f .svc-f-n{
+    font-size:.64rem;
+    padding:1px 6px;
+    border-radius:20px;
+    background:var(--ground);
     color:var(--ink-faint);
   }
-  .svc-track-head .kicker::before{
-    content:"";
-    width:7px;height:7px;border-radius:50%;
-    background:var(--teal);
-    display:inline-block;
-  }
-  .svc-track.growth .svc-track-head .kicker::before{background:var(--amber);}
-  .svc-track-head h3{font-size:1.2rem; margin:0;}
+  .svc-f.active{color:var(--ink); border-color:var(--ink-faint); background:var(--ground-3);}
+  .svc-f.sw.active{border-color:var(--teal); color:var(--teal);}
+  .svc-f.mk.active{border-color:var(--amber); color:var(--amber);}
 
-  .svc-tiles{
+  .svc-unified{
     display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns:repeat(auto-fit, minmax(230px, 1fr));
     gap:16px;
+    margin-top:20px;
   }
   .svc-tile{
+    position:relative;
     background:var(--ground-2);
     border:1px solid var(--line);
     border-radius:14px;
@@ -812,7 +906,7 @@
     display:flex;
     flex-direction:column;
     gap:10px;
-    transition:transform .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);
+    transition:transform .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease), opacity .25s var(--ease);
   }
   .svc-tile:hover{
     transform:translateY(-3px);
@@ -823,6 +917,18 @@
   @media (max-width:539.98px){
     .svc-tile.featured{grid-column:span 1;}
   }
+  .svc-tile[hidden]{display:none;}
+  .svc-disc{
+    align-self:flex-start;
+    font-family:var(--font-mono);
+    font-size:.6rem;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    padding:3px 8px;
+    border-radius:5px;
+  }
+  .svc-disc.sw{background:var(--teal-dim); color:var(--teal);}
+  .svc-disc.mk{background:var(--amber-dim); color:var(--amber);}
   .svc-item-head{
     display:flex;
     align-items:center;
@@ -834,9 +940,9 @@
     font-weight:600;
     color:var(--teal);
   }
-  .svc-track.growth .svc-tile h4{color:var(--amber);}
+  .svc-tile[data-disc="mk"] h4{color:var(--amber);}
   .svc-item-head .icon{color:var(--teal);}
-  .svc-track.growth .svc-item-head .icon{color:var(--amber);}
+  .svc-tile[data-disc="mk"] .svc-item-head .icon{color:var(--amber);}
   .svc-tile p{margin:0; font-size:.9rem;}
 
   .status-row{
@@ -2161,6 +2267,50 @@
       <div class="max-content" data-reveal>
         <p class="eyebrow">Vision &amp; Mission</p>
         <h2>Why KEB exists</h2>
+        <div class="eco" id="eco" data-state="patchwork">
+          <div class="eco-toggle" role="group" aria-label="Compare how most businesses run versus running on KEB">
+            <button type="button" class="eco-btn active" data-state-set="patchwork" aria-pressed="true">Most businesses</button>
+            <button type="button" class="eco-btn" data-state-set="ecosystem" aria-pressed="false">On KEB</button>
+          </div>
+
+          <svg class="eco-svg" viewBox="0 0 560 320" role="img" aria-label="Diagram: six disconnected tools and vendors rearranging into one connected ecosystem around KEB">
+            <g class="eco-links">
+              <line x1="280" y1="160" x2="120" y2="66"/>
+              <line x1="280" y1="160" x2="96" y2="160"/>
+              <line x1="280" y1="160" x2="120" y2="254"/>
+              <line x1="280" y1="160" x2="440" y2="66"/>
+              <line x1="280" y1="160" x2="464" y2="160"/>
+              <line x1="280" y1="160" x2="440" y2="254"/>
+            </g>
+
+            <g class="eco-hub">
+              <rect x="-52" y="-22" width="104" height="44" rx="12"/>
+              <text x="0" y="6" text-anchor="middle">KEB</text>
+            </g>
+
+            <g class="eco-node sw" style="--px:74px;  --py:52px;  --ex:120px; --ey:66px;">
+              <rect x="-52" y="-16" width="104" height="32" rx="9"/><text x="0" y="5" text-anchor="middle">CRM</text>
+            </g>
+            <g class="eco-node sw" style="--px:214px; --py:104px; --ex:96px;  --ey:160px;">
+              <rect x="-52" y="-16" width="104" height="32" rx="9"/><text x="0" y="5" text-anchor="middle">Website</text>
+            </g>
+            <g class="eco-node sw" style="--px:104px; --py:258px; --ex:120px; --ey:254px;">
+              <rect x="-52" y="-16" width="104" height="32" rx="9"/><text x="0" y="5" text-anchor="middle">Mobile app</text>
+            </g>
+            <g class="eco-node mk" style="--px:406px; --py:46px;  --ex:440px; --ey:66px;">
+              <rect x="-52" y="-16" width="104" height="32" rx="9"/><text x="0" y="5" text-anchor="middle">Campaigns</text>
+            </g>
+            <g class="eco-node mk" style="--px:486px; --py:214px; --ex:464px; --ey:160px;">
+              <rect x="-52" y="-16" width="104" height="32" rx="9"/><text x="0" y="5" text-anchor="middle">Brand</text>
+            </g>
+            <g class="eco-node mk" style="--px:336px; --py:272px; --ex:440px; --ey:254px;">
+              <rect x="-52" y="-16" width="104" height="32" rx="9"/><text x="0" y="5" text-anchor="middle">Content</text>
+            </g>
+          </svg>
+
+          <p class="eco-caption" data-eco-caption>Separate vendors, separate tools. Nothing talks to anything else, and keeping them in sync is your job.</p>
+        </div>
+
         <div class="vm-grid">
           <div class="vm-card vision">
             <div class="icon-badge"><svg class="icon" aria-hidden="true"><use href="#icon-compass"/></svg></div>
@@ -2182,56 +2332,53 @@
         <h2>Two disciplines, one team</h2>
         <p class="svc-intro">Most businesses hire a developer for their systems and a separate agency for their marketing, then spend time keeping the two in sync. KEB does both, so they're never out of sync in the first place.</p>
 
-        <div class="svc-tracks">
-          <div class="svc-track">
-            <div class="svc-track-head">
-              <span class="kicker">Systems</span>
-              <h3>Software Development</h3>
-            </div>
-            <div class="svc-tiles">
-              <div class="svc-tile featured">
-                <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-crm"/></svg><h4>Custom CRM software</h4></div>
-                <p>A system modeled on how your team actually sells and supports &mdash; not a generic template you have to bend your process around.</p>
-              </div>
-              <div class="svc-tile">
-                <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-website"/></svg><h4>Website development</h4></div>
-                <p>Marketing sites and web apps designed around your brand and built to convert visitors into leads.</p>
-              </div>
-              <div class="svc-tile">
-                <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-mobile"/></svg><h4>Mobile app implementation</h4></div>
-                <p>iOS and Android apps built and shipped, from spec through app-store release.</p>
-              </div>
-            </div>
-          </div>
+        <div class="svc-filter" role="group" aria-label="Filter services by discipline">
+          <button type="button" class="svc-f active" data-filter="all" aria-pressed="true">All <span class="svc-f-n">8</span></button>
+          <button type="button" class="svc-f sw" data-filter="sw" aria-pressed="false"><span class="tl-dot"></span>Systems <span class="svc-f-n">3</span></button>
+          <button type="button" class="svc-f mk" data-filter="mk" aria-pressed="false"><span class="tl-dot"></span>Growth <span class="svc-f-n">5</span></button>
+        </div>
 
-          <div class="svc-track growth">
-            <div class="svc-track-head">
-              <span class="kicker">Growth</span>
-              <h3>Marketing &amp; Creative</h3>
-            </div>
-            <div class="svc-tiles">
-              <div class="svc-tile">
-                <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-social"/></svg><h4>Social Media Management</h4></div>
-                <p>A consistent posting calendar and voice across the channels your audience uses.</p>
-              </div>
-              <div class="svc-tile">
-                <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-seo"/></svg><h4>SEO</h4></div>
-                <p>Technical fixes and content structure aimed at ranking for what your customers actually search.</p>
-              </div>
-              <div class="svc-tile">
-                <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-ads"/></svg><h4>Paid ads</h4></div>
-                <p>Campaigns on the platforms where your buyers already are, with budgets tracked to results.</p>
-              </div>
-              <div class="svc-tile">
-                <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-branding"/></svg><h4>Branding</h4></div>
-                <p>Identity, voice, and visual system that carries across your site, product, and campaigns.</p>
-              </div>
-              <div class="svc-tile">
-                <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-video"/></svg><h4>AI videos</h4></div>
-                <p>AI-produced video content for ads, social, and product demos, turned around fast.</p>
-              </div>
-            </div>
-          </div>
+        <div class="svc-unified" data-filter-state="all">
+          <article class="svc-tile featured" data-disc="sw">
+            <span class="svc-disc sw">Systems</span>
+            <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-crm"/></svg><h4>Custom CRM software</h4></div>
+            <p>A system modeled on how your team actually sells and supports &mdash; not a generic template you have to bend your process around.</p>
+          </article>
+          <article class="svc-tile" data-disc="sw">
+            <span class="svc-disc sw">Systems</span>
+            <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-website"/></svg><h4>Website development</h4></div>
+            <p>Marketing sites and web apps designed around your brand and built to convert visitors into leads.</p>
+          </article>
+          <article class="svc-tile" data-disc="sw">
+            <span class="svc-disc sw">Systems</span>
+            <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-mobile"/></svg><h4>Mobile app implementation</h4></div>
+            <p>iOS and Android apps built and shipped, from spec through app-store release.</p>
+          </article>
+          <article class="svc-tile" data-disc="mk">
+            <span class="svc-disc mk">Growth</span>
+            <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-social"/></svg><h4>Social Media Management</h4></div>
+            <p>A consistent posting calendar and voice across the channels your audience uses.</p>
+          </article>
+          <article class="svc-tile" data-disc="mk">
+            <span class="svc-disc mk">Growth</span>
+            <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-seo"/></svg><h4>SEO</h4></div>
+            <p>Technical fixes and content structure aimed at ranking for what your customers actually search.</p>
+          </article>
+          <article class="svc-tile" data-disc="mk">
+            <span class="svc-disc mk">Growth</span>
+            <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-ads"/></svg><h4>Paid ads</h4></div>
+            <p>Campaigns on the platforms where your buyers already are, with budgets tracked to results.</p>
+          </article>
+          <article class="svc-tile" data-disc="mk">
+            <span class="svc-disc mk">Growth</span>
+            <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-branding"/></svg><h4>Branding</h4></div>
+            <p>Identity, voice, and visual system that carries across your site, product, and campaigns.</p>
+          </article>
+          <article class="svc-tile" data-disc="mk">
+            <span class="svc-disc mk">Growth</span>
+            <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-video"/></svg><h4>AI videos</h4></div>
+            <p>AI-produced video content for ads, social, and product demos, turned around fast.</p>
+          </article>
         </div>
 
         <div class="status-row">
@@ -2763,6 +2910,67 @@
       selectDemoTab(demoTabs[(i + dir + demoTabs.length) % demoTabs.length], true);
     });
   });
+
+  /* ---------- services filter ---------- */
+  var svcGrid = document.querySelector(".svc-unified");
+  if (svcGrid){
+    var svcFilters = Array.prototype.slice.call(document.querySelectorAll(".svc-f"));
+    var svcTiles = Array.prototype.slice.call(svcGrid.querySelectorAll(".svc-tile"));
+    svcFilters.forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var f = btn.dataset.filter;
+        svcFilters.forEach(function(b){
+          var on = b === btn;
+          b.classList.toggle("active", on);
+          b.setAttribute("aria-pressed", on ? "true" : "false");
+        });
+        svcGrid.dataset.filterState = f;
+        svcTiles.forEach(function(tile){
+          tile.hidden = f !== "all" && tile.dataset.disc !== f;
+        });
+      });
+    });
+  }
+
+  /* ---------- ecosystem diagram ---------- */
+  var eco = document.getElementById("eco");
+  if (eco){
+    var ecoBtns = Array.prototype.slice.call(eco.querySelectorAll(".eco-btn"));
+    var ecoCaption = eco.querySelector("[data-eco-caption]");
+    var ecoCopy = {
+      patchwork: "Separate vendors, separate tools. Nothing talks to anything else, and keeping them in sync is your job.",
+      ecosystem: "One team, one system. The software your team works in and the campaigns that fill it are built to talk to each other."
+    };
+
+    function setEco(state){
+      eco.dataset.state = state;
+      ecoBtns.forEach(function(b){
+        var on = b.dataset.stateSet === state;
+        b.classList.toggle("active", on);
+        b.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+      if (ecoCaption) ecoCaption.textContent = ecoCopy[state];
+    }
+
+    ecoBtns.forEach(function(b){
+      b.addEventListener("click", function(){ setEco(b.dataset.stateSet); });
+    });
+
+    if ("IntersectionObserver" in window){
+      var ecoSeen = false;
+      var eio = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting && !ecoSeen){
+            ecoSeen = true;
+            setTimeout(function(){ setEco("ecosystem"); }, reduceMotion ? 0 : 700);
+          }
+        });
+      }, { threshold: 0.45 });
+      eio.observe(eco);
+    } else {
+      setEco("ecosystem");
+    }
+  }
 
   /* ---------- process timeline progressive fill ---------- */
   var tlStages = document.querySelectorAll(".tl-stage");
