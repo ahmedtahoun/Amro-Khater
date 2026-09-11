@@ -450,15 +450,143 @@
     margin-top:64px;
   }
   .hero-preview .app-frame{
-    max-width:920px;
+    max-width:1040px;
     margin-inline:auto;
     box-shadow:0 40px 90px -30px rgba(0,0,0,.7);
   }
   .hero-preview .kpi-row{margin-bottom:0;}
-  .hero-preview .app-frame-body{padding:20px 24px 24px;}
   @media (max-width:719.98px){
     .hero-preview .kpi-row{grid-template-columns:repeat(2,1fr);}
   }
+
+  /* ---------- hero preview: app shell (sidebar + topbar + widgets) ---------- */
+  .app-shell{display:flex; align-items:stretch;}
+  .app-sidebar{
+    display:none;
+    flex-direction:column;
+    width:172px;
+    flex-shrink:0;
+    background:var(--ground-3);
+    border-right:1px solid var(--line);
+    padding:20px 14px;
+  }
+  @media (min-width:760px){
+    .app-sidebar{display:flex;}
+  }
+  .app-sidebar-brand{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--font-display);
+    font-weight:700;
+    color:var(--ink);
+    font-size:.95rem;
+    margin-bottom:22px;
+    padding:0 8px;
+  }
+  .app-sidebar-brand .icon{color:var(--teal); width:18px; height:18px;}
+  .app-nav{display:flex; flex-direction:column; gap:2px;}
+  .app-nav-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:9px 10px;
+    border-radius:8px;
+    font-family:var(--font-mono);
+    font-size:.76rem;
+    color:var(--ink-faint);
+  }
+  .app-nav-item .icon{width:15px; height:15px;}
+  .app-nav-item.active{background:var(--teal-dim); color:var(--teal);}
+
+  .app-main{flex:1; min-width:0; display:flex; flex-direction:column;}
+  .app-topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding:14px 20px;
+    border-bottom:1px solid var(--line);
+  }
+  .app-search{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:var(--ground);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:7px 12px;
+    font-family:var(--font-mono);
+    font-size:.72rem;
+    color:var(--ink-faint);
+    flex:1;
+    max-width:220px;
+  }
+  .app-search .icon{width:13px; height:13px;}
+  .app-topbar-actions{display:flex; align-items:center; gap:10px; flex-shrink:0;}
+  .app-icon-btn{
+    width:30px; height:30px;
+    border-radius:50%;
+    background:var(--ground);
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--ink-faint);
+    flex-shrink:0;
+  }
+  .app-icon-btn .icon{width:14px; height:14px;}
+  .app-avatar{
+    width:30px; height:30px;
+    border-radius:50%;
+    background:var(--teal-dim);
+    color:var(--teal);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-mono);
+    font-size:.62rem;
+    font-weight:600;
+    flex-shrink:0;
+  }
+  .app-main-body{padding:20px 22px 22px;}
+
+  .app-widget-row{display:grid; grid-template-columns:1fr; gap:16px; margin-top:16px;}
+  @media (min-width:640px){
+    .app-widget-row{grid-template-columns:1.6fr 1fr;}
+  }
+  .app-widget{
+    background:var(--ground);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:18px;
+  }
+  .app-widget-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:14px;
+    flex-wrap:wrap;
+  }
+  .app-widget-head h4{
+    margin:0;
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:.92rem;
+    color:var(--ink);
+  }
+  .chart-legend{display:flex; gap:14px; font-family:var(--font-mono); font-size:.66rem; color:var(--ink-faint);}
+  .legend-item{display:flex; align-items:center; gap:6px;}
+  .legend-item .swatch{width:14px; height:2px; display:inline-block; background:var(--teal); border-radius:1px;}
+  .legend-item .swatch.dashed{background:none; border-top:2px dashed var(--ink-faint); height:0;}
+
+  .donut-wrap{display:flex; justify-content:center; margin-bottom:14px;}
+  .donut{width:126px; height:126px;}
+  .donut .ring-bg{fill:none; stroke:var(--line); stroke-width:14;}
+  .donut .ring-seg{fill:none; stroke-width:14;}
+  .donut .donut-value{font-family:var(--font-body); font-weight:700; fill:var(--ink);}
+  .donut .donut-label{font-family:var(--font-mono); fill:var(--ink-faint);}
+  .donut-legend{display:flex; flex-direction:column; gap:8px;}
+  .donut-legend .d-item{display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:.72rem; color:var(--ink-dim);}
+  .donut-legend .d-dot{width:8px; height:8px; border-radius:50%; flex-shrink:0;}
+  .donut-legend .d-item .d-val{margin-left:auto; color:var(--ink); font-variant-numeric:tabular-nums;}
 
   /* ---------- vision/mission ---------- */
   .vm-grid{
@@ -1122,6 +1250,21 @@
       <path d="M3 17l6-6 4 4 8-8"/>
       <path d="M15 6h6v6"/>
     </symbol>
+    <symbol id="icon-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="4" y="4" width="7" height="7" rx="1.5"/>
+      <rect x="13" y="4" width="7" height="7" rx="1.5"/>
+      <rect x="4" y="13" width="7" height="7" rx="1.5"/>
+      <rect x="13" y="13" width="7" height="7" rx="1.5"/>
+    </symbol>
+    <symbol id="icon-sliders" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="4" y1="6" x2="20" y2="6"/><circle cx="9" cy="6" r="2"/>
+      <line x1="4" y1="12" x2="20" y2="12"/><circle cx="15" cy="12" r="2"/>
+      <line x1="4" y1="18" x2="20" y2="18"/><circle cx="11" cy="18" r="2"/>
+    </symbol>
+    <symbol id="icon-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3a5 5 0 0 0-5 5v3.5c0 .8-.3 1.6-.9 2.2L5 15h14l-1.1-1.3c-.6-.6-.9-1.4-.9-2.2V8a5 5 0 0 0-5-5z"/>
+      <path d="M9.5 18a2.5 2.5 0 0 0 5 0"/>
+    </symbol>
   </defs>
 </svg>
 
@@ -1191,31 +1334,97 @@
             <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
             <span class="app-frame-url">app.kebinternational.com/pipeline</span>
           </div>
-          <div class="app-frame-body">
-            <div class="kpi-row">
-              <div class="kpi-tile">
-                <span class="kpi-icon"><svg class="icon" aria-hidden="true"><use href="#icon-users"/></svg></span>
-                <span class="kpi-label">Open deals</span>
-                <span class="kpi-value">24</span>
-                <span class="kpi-delta"><svg class="icon" aria-hidden="true"><use href="#icon-trend"/></svg>+3 this month</span>
+          <div class="app-shell">
+            <div class="app-sidebar">
+              <div class="app-sidebar-brand"><svg class="icon" aria-hidden="true"><use href="#icon-crm"/></svg>KEB</div>
+              <nav class="app-nav">
+                <span class="app-nav-item active"><svg class="icon" aria-hidden="true"><use href="#icon-grid"/></svg>Dashboard</span>
+                <span class="app-nav-item"><svg class="icon" aria-hidden="true"><use href="#icon-users"/></svg>Leads</span>
+                <span class="app-nav-item"><svg class="icon" aria-hidden="true"><use href="#icon-tag"/></svg>Deals</span>
+                <span class="app-nav-item"><svg class="icon" aria-hidden="true"><use href="#icon-ads"/></svg>Campaigns</span>
+                <span class="app-nav-item"><svg class="icon" aria-hidden="true"><use href="#icon-mail"/></svg>Inbox</span>
+                <span class="app-nav-item"><svg class="icon" aria-hidden="true"><use href="#icon-sliders"/></svg>Settings</span>
+              </nav>
+            </div>
+            <div class="app-main">
+              <div class="app-topbar">
+                <div class="app-search"><svg class="icon" aria-hidden="true"><use href="#icon-seo"/></svg>Search records&hellip;</div>
+                <div class="app-topbar-actions">
+                  <span class="app-icon-btn"><svg class="icon" aria-hidden="true"><use href="#icon-bell"/></svg></span>
+                  <span class="app-avatar">KH</span>
+                </div>
               </div>
-              <div class="kpi-tile">
-                <span class="kpi-icon"><svg class="icon" aria-hidden="true"><use href="#icon-tag"/></svg></span>
-                <span class="kpi-label">Pipeline value</span>
-                <span class="kpi-value">$186K</span>
-                <span class="kpi-delta"><svg class="icon" aria-hidden="true"><use href="#icon-trend"/></svg>+12% this month</span>
-              </div>
-              <div class="kpi-tile">
-                <span class="kpi-icon"><svg class="icon" aria-hidden="true"><use href="#icon-ads"/></svg></span>
-                <span class="kpi-label">Win rate</span>
-                <span class="kpi-value">32%</span>
-                <span class="kpi-delta neutral">steady</span>
-              </div>
-              <div class="kpi-tile">
-                <span class="kpi-icon"><svg class="icon" aria-hidden="true"><use href="#icon-clock"/></svg></span>
-                <span class="kpi-label">Avg. deal age</span>
-                <span class="kpi-value">18d</span>
-                <span class="kpi-delta neutral">steady</span>
+              <div class="app-main-body">
+                <div class="kpi-row">
+                  <div class="kpi-tile">
+                    <span class="kpi-icon"><svg class="icon" aria-hidden="true"><use href="#icon-users"/></svg></span>
+                    <span class="kpi-label">Open deals</span>
+                    <span class="kpi-value">24</span>
+                    <span class="kpi-delta"><svg class="icon" aria-hidden="true"><use href="#icon-trend"/></svg>+3 this month</span>
+                  </div>
+                  <div class="kpi-tile">
+                    <span class="kpi-icon"><svg class="icon" aria-hidden="true"><use href="#icon-tag"/></svg></span>
+                    <span class="kpi-label">Pipeline value</span>
+                    <span class="kpi-value">$186K</span>
+                    <span class="kpi-delta"><svg class="icon" aria-hidden="true"><use href="#icon-trend"/></svg>+12% this month</span>
+                  </div>
+                  <div class="kpi-tile">
+                    <span class="kpi-icon"><svg class="icon" aria-hidden="true"><use href="#icon-ads"/></svg></span>
+                    <span class="kpi-label">Win rate</span>
+                    <span class="kpi-value">32%</span>
+                    <span class="kpi-delta neutral">steady</span>
+                  </div>
+                  <div class="kpi-tile">
+                    <span class="kpi-icon"><svg class="icon" aria-hidden="true"><use href="#icon-clock"/></svg></span>
+                    <span class="kpi-label">Avg. deal age</span>
+                    <span class="kpi-value">18d</span>
+                    <span class="kpi-delta neutral">steady</span>
+                  </div>
+                </div>
+
+                <div class="app-widget-row">
+                  <div class="app-widget">
+                    <div class="app-widget-head">
+                      <h4>Pipeline growth</h4>
+                      <div class="chart-legend">
+                        <span class="legend-item"><span class="swatch"></span>This month</span>
+                        <span class="legend-item"><span class="swatch dashed"></span>Last month</span>
+                      </div>
+                    </div>
+                    <svg class="mini-line-chart" viewBox="0 0 320 100">
+                      <line class="grid-line" x1="0" y1="95" x2="320" y2="95"/>
+                      <path d="M10,90 L52.9,86 L95.7,88 L138.6,82 L181.4,84 L224.3,78 L267.1,80 L310,68" fill="none" stroke="var(--ink-faint)" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round"/>
+                      <path d="M10,82 L52.9,74 L95.7,78 L138.6,60 L181.4,52 L224.3,58 L267.1,38 L310,22" fill="none" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <circle cx="310" cy="22" r="4.5" fill="var(--teal)" stroke="var(--ground)" stroke-width="2"/>
+                    </svg>
+                    <div class="chart-x-axis">
+                      <span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span><span>W6</span><span>W7</span><span>W8</span>
+                    </div>
+                  </div>
+
+                  <div class="app-widget">
+                    <div class="app-widget-head"><h4>Pipeline mix</h4></div>
+                    <div class="donut-wrap">
+                      <svg class="donut" viewBox="0 0 120 120">
+                        <circle class="ring-bg" cx="60" cy="60" r="48"/>
+                        <g transform="rotate(-90 60 60)">
+                          <circle class="ring-seg" cx="60" cy="60" r="48" stroke="rgba(47,214,189,.28)" stroke-dasharray="148.4 153.2" stroke-dashoffset="0"/>
+                          <circle class="ring-seg" cx="60" cy="60" r="48" stroke="rgba(47,214,189,.5)" stroke-dasharray="96.4 205.2" stroke-dashoffset="-148.4"/>
+                          <circle class="ring-seg" cx="60" cy="60" r="48" stroke="rgba(47,214,189,.75)" stroke-dasharray="42 259.6" stroke-dashoffset="-244.8"/>
+                          <circle class="ring-seg" cx="60" cy="60" r="48" stroke="#2fd6bd" stroke-dasharray="14.8 286.8" stroke-dashoffset="-286.8"/>
+                        </g>
+                        <text class="donut-value" x="60" y="57" text-anchor="middle" font-size="22">488</text>
+                        <text class="donut-label" x="60" y="74" text-anchor="middle" font-size="9">In pipeline</text>
+                      </svg>
+                    </div>
+                    <div class="donut-legend">
+                      <span class="d-item"><span class="d-dot" style="background:rgba(47,214,189,.28)"></span>Leads<span class="d-val">240</span></span>
+                      <span class="d-item"><span class="d-dot" style="background:rgba(47,214,189,.5)"></span>Contacted<span class="d-val">156</span></span>
+                      <span class="d-item"><span class="d-dot" style="background:rgba(47,214,189,.75)"></span>Deals<span class="d-val">68</span></span>
+                      <span class="d-item"><span class="d-dot" style="background:#2fd6bd"></span>Clients<span class="d-val">24</span></span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
