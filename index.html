@@ -461,8 +461,6 @@
     max-width:1040px;
     margin-inline:auto;
     box-shadow:0 40px 90px -30px rgba(0,0,0,.7);
-    transition:transform .12s ease-out, box-shadow .25s var(--ease);
-    will-change:transform;
   }
 
   /* ---------- ticker ---------- */
@@ -537,9 +535,91 @@
     font-family:var(--font-mono);
     font-size:.76rem;
     color:var(--ink-faint);
+    background:none;
+    border:none;
+    width:100%;
+    text-align:left;
+    cursor:pointer;
+    transition:background .18s var(--ease), color .18s var(--ease);
   }
   .app-nav-item .icon{width:15px; height:15px;}
-  .app-nav-item.active{background:var(--teal-dim); color:var(--teal);}
+  button.app-nav-item:hover{background:rgba(255,255,255,.04); color:var(--ink);}
+  .app-nav-item.active,
+  button.app-nav-item.active:hover{background:var(--teal-dim); color:var(--teal);}
+  .app-nav-item.is-static{opacity:.5; cursor:default;}
+
+  .app-view[hidden]{display:none;}
+  .app-view{animation:viewIn .3s var(--ease);}
+  @keyframes viewIn{
+    from{opacity:0; transform:translateY(6px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .app-view{animation:none;}
+  }
+
+  .rec-toolbar{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:14px;
+  }
+  .rec-toolbar .panel-title{margin:0;}
+  .rec-count{font-family:var(--font-mono); font-size:.68rem; color:var(--ink-faint);}
+  .rec-table{
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+  }
+  .rec-head,
+  .rec-row{
+    display:grid;
+    grid-template-columns:1.6fr 1fr .8fr .7fr;
+    align-items:center;
+    gap:10px;
+    padding:11px 14px;
+  }
+  .rec-head{
+    background:var(--ground);
+    font-family:var(--font-mono);
+    font-size:.62rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+  }
+  .rec-row{
+    border-top:1px solid var(--line);
+    font-size:.84rem;
+    color:var(--ink-dim);
+    transition:background .18s var(--ease);
+  }
+  .rec-row:hover{background:rgba(255,255,255,.03);}
+  .rec-name{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    color:var(--ink);
+    font-weight:600;
+    min-width:0;
+  }
+  .rec-name .avatar{width:26px; height:26px; font-size:.58rem;}
+  .rec-num{font-family:var(--font-mono); font-variant-numeric:tabular-nums; color:var(--ink);}
+  .rec-when{font-family:var(--font-mono); font-size:.72rem; color:var(--ink-faint);}
+  @media (max-width:600px){
+    .rec-head,
+    .rec-row{grid-template-columns:1.4fr 1fr .8fr;}
+    .rec-when{display:none;}
+  }
+
+  .preview-note{
+    max-width:1040px;
+    margin:14px auto 0;
+    font-family:var(--font-mono);
+    font-size:.7rem;
+    color:var(--ink-faint);
+    text-align:center;
+  }
 
   .app-main{flex:1; min-width:0; display:flex; flex-direction:column;}
   .app-topbar{
@@ -1048,6 +1128,270 @@
     color:var(--ink-faint);
   }
 
+  /* ---------- brand kit explorer ---------- */
+  .kit{
+    margin-top:28px;
+    border:1px solid var(--line);
+    border-radius:16px;
+    overflow:hidden;
+    background:var(--ground-2);
+  }
+  .kit[data-kit="ember"]{--k1:#e8734a; --k2:#f2b544; --k3:#2a1810; --k4:#f7efe3;}
+  .kit[data-kit="marine"]{--k1:#2f80d6; --k2:#58c6d6; --k3:#0c1f2e; --k4:#e8f2f7;}
+  .kit[data-kit="verdant"]{--k1:#3fa76a; --k2:#a8c947; --k3:#10241a; --k4:#f0f4e6;}
+
+  .kit-tabs{
+    display:flex;
+    gap:6px;
+    padding:12px 14px;
+    border-bottom:1px solid var(--line);
+    background:var(--ground-3);
+    flex-wrap:wrap;
+  }
+  .kit-tab{
+    font-family:var(--font-mono);
+    font-size:.72rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    padding:8px 14px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:transparent;
+    color:var(--ink-faint);
+    cursor:pointer;
+    transition:background .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease);
+  }
+  .kit-tab:hover{color:var(--ink); border-color:var(--ink-faint);}
+  .kit-tab.active{background:var(--k1); border-color:var(--k1); color:var(--k4);}
+
+  .kit-body{display:grid; grid-template-columns:1fr; gap:0;}
+  @media (min-width:760px){
+    .kit-body{grid-template-columns:1.05fr 1fr;}
+  }
+  .kit-stage{
+    background:var(--k3);
+    padding:40px 32px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    min-height:230px;
+    transition:background .45s var(--ease);
+  }
+  .kit-lockup{display:flex; align-items:center; gap:14px;}
+  .kit-mark{
+    width:54px; height:54px;
+    border-radius:14px;
+    background:var(--k1);
+    color:var(--k4);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:1.7rem;
+    transition:background .45s var(--ease);
+  }
+  .kit-word{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:1.8rem;
+    color:var(--k4);
+    letter-spacing:-.01em;
+  }
+  .kit-tag{
+    font-family:var(--font-mono);
+    font-size:.68rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--k2);
+    text-align:center;
+  }
+
+  .kit-detail{padding:26px 28px; display:flex; flex-direction:column; gap:22px;}
+  .kit-block{display:flex; flex-direction:column; gap:10px;}
+  .kit-label{
+    font-family:var(--font-mono);
+    font-size:.62rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+  }
+  .kit-swatches{display:flex; gap:8px;}
+  .kit-sw{
+    width:46px; height:46px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,.08);
+    transition:background .45s var(--ease);
+  }
+  .kit-sw.sw1{background:var(--k1);}
+  .kit-sw.sw2{background:var(--k2);}
+  .kit-sw.sw3{background:var(--k3);}
+  .kit-sw.sw4{background:var(--k4);}
+  .kit-specimen{
+    margin:0;
+    color:var(--ink);
+    font-size:1.3rem;
+    line-height:1.25;
+  }
+  .kit[data-kit="ember"] .kit-specimen{font-family:var(--font-display); font-weight:700; font-style:italic;}
+  .kit[data-kit="marine"] .kit-specimen{font-family:var(--font-body); font-weight:600; letter-spacing:.04em;}
+  .kit[data-kit="verdant"] .kit-specimen{font-family:var(--font-display); font-weight:400;}
+  .kit-specimen-sub{
+    margin:0;
+    font-family:var(--font-mono);
+    font-size:.68rem;
+    color:var(--ink-faint);
+  }
+  .kit-chips{display:flex; flex-wrap:wrap; gap:7px;}
+  .kit-chip{
+    font-family:var(--font-mono);
+    font-size:.64rem;
+    padding:5px 10px;
+    border-radius:6px;
+    background:var(--ground);
+    border:1px solid var(--line);
+    color:var(--ink-dim);
+  }
+
+  /* ---------- before / after ---------- */
+  .ba-wrap{margin-top:22px;}
+  .ba-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:12px;
+    flex-wrap:wrap;
+  }
+  .ba-head h4{
+    margin:0;
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:1.05rem;
+    color:var(--ink);
+  }
+  .ba-hint{font-family:var(--font-mono); font-size:.68rem; color:var(--ink-faint);}
+  .ba{
+    position:relative;
+    border:1px solid var(--line);
+    border-radius:16px;
+    overflow:hidden;
+    background:var(--ground-2);
+    height:300px;
+  }
+  .ba-pane{position:absolute; inset:0;}
+  .ba-after{clip-path:inset(0 calc(100% - var(--pos)) 0 0);}
+  .ba-card{
+    width:100%;
+    height:100%;
+    padding:34px 38px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .ba-card-old{
+    background:#e9e9e6;
+    color:#1a1a1a;
+    font-family:"Times New Roman", Times, serif;
+    align-items:center;
+    text-align:center;
+  }
+  .old-kicker{margin:0 0 8px; color:#c0341a; font-weight:700; font-size:.9rem; letter-spacing:.04em;}
+  .old-title{margin:0 0 10px; font-size:1.3rem; font-weight:700; line-height:1.16; max-width:26ch;}
+  .old-body{margin:0 0 16px; font-size:.8rem; line-height:1.4; color:#3a3a3a; max-width:44ch;}
+  .old-btn{
+    display:inline-block;
+    background:#1f5fbf;
+    color:#fff;
+    padding:8px 16px;
+    font-size:.8rem;
+    font-weight:700;
+    border:2px outset #4a8ae0;
+  }
+  .ba-card-new{
+    background:linear-gradient(140deg, var(--ground-3), var(--ground));
+  }
+  .new-kicker{
+    display:inline-block;
+    font-family:var(--font-mono);
+    font-size:.62rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--teal);
+    margin-bottom:14px;
+  }
+  .new-title{
+    margin:0 0 12px;
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:1.75rem;
+    line-height:1.12;
+    color:var(--ink);
+  }
+  .new-body{margin:0 0 20px; font-size:.9rem; color:var(--ink-dim);}
+  .new-btn{
+    display:inline-block;
+    background:var(--teal);
+    color:var(--teal-ink);
+    font-family:var(--font-mono);
+    font-size:.78rem;
+    font-weight:600;
+    padding:11px 20px;
+    border-radius:999px;
+  }
+  .ba-flag{
+    position:absolute;
+    top:14px;
+    font-family:var(--font-mono);
+    font-size:.6rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    padding:4px 10px;
+    border-radius:5px;
+  }
+  .flag-before{right:14px; background:rgba(0,0,0,.6); color:#f0f0ec;}
+  .flag-after{left:14px; background:var(--teal); color:var(--teal-ink);}
+  .ba-divider{
+    position:absolute;
+    top:0; bottom:0;
+    left:var(--pos);
+    width:2px;
+    background:var(--teal);
+    transform:translateX(-1px);
+    pointer-events:none;
+  }
+  .ba-divider::after{
+    content:"";
+    position:absolute;
+    top:50%; left:50%;
+    width:34px; height:34px;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    background:var(--teal);
+    box-shadow:0 4px 16px rgba(0,0,0,.5);
+  }
+  .ba-range{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    margin:0;
+    opacity:0;
+    cursor:ew-resize;
+    -webkit-appearance:none;
+    appearance:none;
+    background:transparent;
+  }
+  .ba-range:focus-visible + .ba-divider,
+  .ba-range:focus-visible ~ .ba-divider{outline:2px solid var(--teal); outline-offset:2px;}
+  @media (max-width:600px){
+    .ba{height:340px;}
+    .new-title{font-size:1.4rem;}
+  }
+
+  .studio-frame{margin-top:22px;}
+
   /* ---------- approach ---------- */
   .approach-body{max-width:66ch; margin-top:18px;}
   .diff-list{
@@ -1404,33 +1748,33 @@
         </div>
       </div>
 
-      <div class="hero-preview" aria-hidden="true">
+      <div class="hero-preview" role="group" aria-label="Interactive product demo with sample data">
         <div class="app-frame">
           <div class="app-frame-bar">
-            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-            <span class="app-frame-url">app.kebinternational.com/pipeline</span>
+            <span class="dot r" aria-hidden="true"></span><span class="dot y" aria-hidden="true"></span><span class="dot g" aria-hidden="true"></span>
+            <span class="app-frame-url" id="appFrameUrl">app.kebinternational.com/pipeline</span>
           </div>
           <div class="app-shell">
             <div class="app-sidebar">
               <div class="app-sidebar-brand"><svg class="icon" aria-hidden="true"><use href="#icon-crm"/></svg>KEB</div>
-              <nav class="app-nav">
-                <span class="app-nav-item active"><svg class="icon" aria-hidden="true"><use href="#icon-grid"/></svg>Dashboard</span>
-                <span class="app-nav-item"><svg class="icon" aria-hidden="true"><use href="#icon-users"/></svg>Leads</span>
-                <span class="app-nav-item"><svg class="icon" aria-hidden="true"><use href="#icon-tag"/></svg>Deals</span>
-                <span class="app-nav-item"><svg class="icon" aria-hidden="true"><use href="#icon-ads"/></svg>Campaigns</span>
-                <span class="app-nav-item"><svg class="icon" aria-hidden="true"><use href="#icon-mail"/></svg>Inbox</span>
-                <span class="app-nav-item"><svg class="icon" aria-hidden="true"><use href="#icon-sliders"/></svg>Settings</span>
+              <nav class="app-nav" role="tablist" aria-orientation="vertical" aria-label="Demo views">
+                <button type="button" class="app-nav-item active" role="tab" id="tab-dashboard" aria-controls="view-dashboard" aria-selected="true" data-view="dashboard" data-url="app.kebinternational.com/pipeline"><svg class="icon" aria-hidden="true"><use href="#icon-grid"/></svg>Dashboard</button>
+                <button type="button" class="app-nav-item" role="tab" id="tab-leads" aria-controls="view-leads" aria-selected="false" tabindex="-1" data-view="leads" data-url="app.kebinternational.com/leads"><svg class="icon" aria-hidden="true"><use href="#icon-users"/></svg>Leads</button>
+                <button type="button" class="app-nav-item" role="tab" id="tab-campaigns" aria-controls="view-campaigns" aria-selected="false" tabindex="-1" data-view="campaigns" data-url="app.kebinternational.com/campaigns"><svg class="icon" aria-hidden="true"><use href="#icon-ads"/></svg>Campaigns</button>
+                <span class="app-nav-item is-static" aria-hidden="true"><svg class="icon"><use href="#icon-mail"/></svg>Inbox</span>
+                <span class="app-nav-item is-static" aria-hidden="true"><svg class="icon"><use href="#icon-sliders"/></svg>Settings</span>
               </nav>
             </div>
             <div class="app-main">
-              <div class="app-topbar">
-                <div class="app-search"><svg class="icon" aria-hidden="true"><use href="#icon-seo"/></svg>Search records&hellip;</div>
+              <div class="app-topbar" aria-hidden="true">
+                <div class="app-search"><svg class="icon"><use href="#icon-seo"/></svg>Search records&hellip;</div>
                 <div class="app-topbar-actions">
-                  <span class="app-icon-btn"><svg class="icon" aria-hidden="true"><use href="#icon-bell"/></svg></span>
+                  <span class="app-icon-btn"><svg class="icon"><use href="#icon-bell"/></svg></span>
                   <span class="app-avatar">KH</span>
                 </div>
               </div>
               <div class="app-main-body">
+              <div class="app-view active" role="tabpanel" id="view-dashboard" aria-labelledby="tab-dashboard" tabindex="0">
                 <div class="kpi-row">
                   <div class="kpi-tile">
                     <span class="kpi-icon"><svg class="icon" aria-hidden="true"><use href="#icon-users"/></svg></span>
@@ -1502,9 +1846,123 @@
                   </div>
                 </div>
               </div>
+
+              <div class="app-view" role="tabpanel" id="view-leads" aria-labelledby="tab-leads" tabindex="0" hidden>
+                <div class="rec-toolbar">
+                  <p class="panel-title">All leads</p>
+                  <span class="rec-count">5 of 240</span>
+                </div>
+                <div class="rec-table">
+                  <div class="rec-head">
+                    <span>Name</span><span>Stage</span><span class="rec-num">Value</span><span class="rec-when">Updated</span>
+                  </div>
+                  <div class="rec-row">
+                    <span class="rec-name"><span class="avatar">AK</span>Amir K.</span>
+                    <span><span class="pill hot">Contacted</span></span>
+                    <span class="rec-num">$12,400</span>
+                    <span class="rec-when">2h ago</span>
+                  </div>
+                  <div class="rec-row">
+                    <span class="rec-name"><span class="avatar">SR</span>Sara R.</span>
+                    <span><span class="pill new">New</span></span>
+                    <span class="rec-num">$8,900</span>
+                    <span class="rec-when">4h ago</span>
+                  </div>
+                  <div class="rec-row">
+                    <span class="rec-name"><span class="avatar">MF</span>Medhat F.</span>
+                    <span><span class="pill won">Won</span></span>
+                    <span class="rec-num">$31,000</span>
+                    <span class="rec-when">1d ago</span>
+                  </div>
+                  <div class="rec-row">
+                    <span class="rec-name"><span class="avatar">NH</span>Nour H.</span>
+                    <span><span class="pill hot">Follow-up</span></span>
+                    <span class="rec-num">$6,200</span>
+                    <span class="rec-when">1d ago</span>
+                  </div>
+                  <div class="rec-row">
+                    <span class="rec-name"><span class="avatar">YA</span>Youssef A.</span>
+                    <span><span class="pill new">Proposal</span></span>
+                    <span class="rec-num">$19,500</span>
+                    <span class="rec-when">2d ago</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="app-view" role="tabpanel" id="view-campaigns" aria-labelledby="tab-campaigns" tabindex="0" hidden>
+                <div class="kpi-row">
+                  <div class="kpi-tile">
+                    <span class="kpi-icon"><svg class="icon" aria-hidden="true"><use href="#icon-ads"/></svg></span>
+                    <span class="kpi-label">Impressions</span>
+                    <span class="kpi-value">482K</span>
+                    <span class="kpi-delta"><svg class="icon" aria-hidden="true"><use href="#icon-trend"/></svg>+18% this month</span>
+                  </div>
+                  <div class="kpi-tile">
+                    <span class="kpi-icon"><svg class="icon" aria-hidden="true"><use href="#icon-seo"/></svg></span>
+                    <span class="kpi-label">Clicks</span>
+                    <span class="kpi-value">9.4K</span>
+                    <span class="kpi-delta"><svg class="icon" aria-hidden="true"><use href="#icon-trend"/></svg>+9% this month</span>
+                  </div>
+                  <div class="kpi-tile">
+                    <span class="kpi-icon"><svg class="icon" aria-hidden="true"><use href="#icon-social"/></svg></span>
+                    <span class="kpi-label">CTR</span>
+                    <span class="kpi-value">1.9%</span>
+                    <span class="kpi-delta neutral">steady</span>
+                  </div>
+                  <div class="kpi-tile">
+                    <span class="kpi-icon"><svg class="icon" aria-hidden="true"><use href="#icon-tag"/></svg></span>
+                    <span class="kpi-label">Cost / lead</span>
+                    <span class="kpi-value">$6.40</span>
+                    <span class="kpi-delta neutral">steady</span>
+                  </div>
+                </div>
+
+                <div class="app-widget-row">
+                  <div class="app-widget">
+                    <div class="app-widget-head"><h4>Leads per week</h4></div>
+                    <svg class="mini-line-chart" viewBox="0 0 320 100" role="img" aria-label="Leads per week rising from 9 to 34 over eight weeks">
+                      <line class="grid-line" x1="0" y1="95" x2="320" y2="95"/>
+                      <path d="M10,90 L52.9,81.6 L95.7,84.4 L138.6,70.4 L181.4,62 L224.3,53.6 L267.1,39.6 L310,20 L310,95 L10,95 Z" fill="var(--amber)" fill-opacity=".12"/>
+                      <path d="M10,90 L52.9,81.6 L95.7,84.4 L138.6,70.4 L181.4,62 L224.3,53.6 L267.1,39.6 L310,20" fill="none" stroke="var(--amber)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <circle cx="310" cy="20" r="4.5" fill="var(--amber)" stroke="var(--ground)" stroke-width="2"/>
+                    </svg>
+                    <div class="chart-x-axis">
+                      <span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span><span>W6</span><span>W7</span><span>W8</span>
+                    </div>
+                  </div>
+
+                  <div class="app-widget">
+                    <div class="app-widget-head"><h4>By channel</h4></div>
+                    <div class="funnel-chart" role="img" aria-label="Leads by channel: Meta ads 42 percent, Google ads 31 percent, Instagram 18 percent, TikTok 9 percent">
+                      <div class="funnel-row">
+                        <span class="funnel-label">Meta ads</span>
+                        <div class="funnel-track"><div class="funnel-bar" style="width:100%;background:var(--amber)"></div></div>
+                        <span class="funnel-value">42%</span>
+                      </div>
+                      <div class="funnel-row">
+                        <span class="funnel-label">Google ads</span>
+                        <div class="funnel-track"><div class="funnel-bar" style="width:74%;background:rgba(232,162,74,.75)"></div></div>
+                        <span class="funnel-value">31%</span>
+                      </div>
+                      <div class="funnel-row">
+                        <span class="funnel-label">Instagram</span>
+                        <div class="funnel-track"><div class="funnel-bar" style="width:43%;background:rgba(232,162,74,.5)"></div></div>
+                        <span class="funnel-value">18%</span>
+                      </div>
+                      <div class="funnel-row">
+                        <span class="funnel-label">TikTok</span>
+                        <div class="funnel-track"><div class="funnel-bar" style="width:21%;background:rgba(232,162,74,.3)"></div></div>
+                        <span class="funnel-value">9%</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
             </div>
           </div>
         </div>
+        <p class="preview-note">Interactive demo &mdash; click the sidebar to switch views. Sample data, not a live client dashboard.</p>
       </div>
     </section>
 
@@ -1611,197 +2069,124 @@
           <div class="status-item"><span class="status-tag running">Running</span> Paid ad campaigns &mdash; managed for <strong>MediLink360 FZ-LLC</strong></div>
         </div>
 
-        <div class="showcase">
-          <p class="showcase-label">Inside The System</p>
-          <h3>What running on KEB actually looks like</h3>
-          <p class="showcase-sub">Sample product UI built from the same components we ship to clients &mdash; illustrative data, not a live client dashboard.</p>
+        <div class="showcase studio">
+          <p class="showcase-label">Brand &amp; Creative</p>
+          <h3>The other half of what we ship</h3>
+          <p class="showcase-sub">Systems are only half the job. This is the brand and content work that runs alongside them &mdash; sample directions, not live client assets.</p>
 
-          <div class="showcase-grid">
-            <div class="app-frame">
-              <div class="app-frame-bar">
-                <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-                <span class="app-frame-url">app.kebinternational.com/pipeline</span>
-              </div>
-              <div class="app-frame-body">
-                <p class="panel-title">Pipeline overview</p>
-                <div class="kpi-row">
-                  <div class="kpi-tile">
-                    <span class="kpi-icon"><svg class="icon" aria-hidden="true"><use href="#icon-users"/></svg></span>
-                    <span class="kpi-label">Open deals</span>
-                    <span class="kpi-value">24</span>
-                    <span class="kpi-delta"><svg class="icon" aria-hidden="true"><use href="#icon-trend"/></svg>+3 this month</span>
-                  </div>
-                  <div class="kpi-tile">
-                    <span class="kpi-icon"><svg class="icon" aria-hidden="true"><use href="#icon-tag"/></svg></span>
-                    <span class="kpi-label">Pipeline value</span>
-                    <span class="kpi-value">$186K</span>
-                    <span class="kpi-delta"><svg class="icon" aria-hidden="true"><use href="#icon-trend"/></svg>+12% this month</span>
-                  </div>
-                  <div class="kpi-tile">
-                    <span class="kpi-icon"><svg class="icon" aria-hidden="true"><use href="#icon-clock"/></svg></span>
-                    <span class="kpi-label">Avg. deal age</span>
-                    <span class="kpi-value">18d</span>
-                    <span class="kpi-delta neutral">steady</span>
-                  </div>
-                  <div class="kpi-tile">
-                    <span class="kpi-icon"><svg class="icon" aria-hidden="true"><use href="#icon-ads"/></svg></span>
-                    <span class="kpi-label">Win rate</span>
-                    <span class="kpi-value">32%</span>
-                    <span class="kpi-delta neutral">steady</span>
-                  </div>
-                </div>
-                <div class="funnel-chart" role="img" aria-label="Pipeline funnel: 240 leads, 156 contacted, 68 deals, 24 clients">
-                  <div class="funnel-row">
-                    <span class="funnel-label">Leads</span>
-                    <div class="funnel-track"><div class="funnel-bar" style="width:100%;background:rgba(47,214,189,.28)"></div></div>
-                    <span class="funnel-value">240</span>
-                  </div>
-                  <div class="funnel-row">
-                    <span class="funnel-label">Contacted</span>
-                    <div class="funnel-track"><div class="funnel-bar" style="width:65%;background:rgba(47,214,189,.5)"></div></div>
-                    <span class="funnel-value">156</span>
-                  </div>
-                  <div class="funnel-row">
-                    <span class="funnel-label">Deals</span>
-                    <div class="funnel-track"><div class="funnel-bar" style="width:28%;background:rgba(47,214,189,.75)"></div></div>
-                    <span class="funnel-value">68</span>
-                  </div>
-                  <div class="funnel-row">
-                    <span class="funnel-label">Clients</span>
-                    <div class="funnel-track"><div class="funnel-bar" style="width:10%;background:#2fd6bd"></div></div>
-                    <span class="funnel-value">24</span>
-                  </div>
-                </div>
-              </div>
+          <div class="kit" data-kit="ember">
+            <div class="kit-tabs" role="tablist" aria-label="Brand directions">
+              <button type="button" class="kit-tab active" role="tab" id="kit-tab-ember" aria-controls="kit-body" aria-selected="true" data-kit-set="ember">Ember</button>
+              <button type="button" class="kit-tab" role="tab" id="kit-tab-marine" aria-controls="kit-body" aria-selected="false" tabindex="-1" data-kit-set="marine">Marine</button>
+              <button type="button" class="kit-tab" role="tab" id="kit-tab-verdant" aria-controls="kit-body" aria-selected="false" tabindex="-1" data-kit-set="verdant">Verdant</button>
             </div>
 
-            <div class="app-frame" data-reveal>
-              <div class="app-frame-bar">
-                <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-                <span class="app-frame-url">app.kebinternational.com/campaigns</span>
-              </div>
-              <div class="app-frame-body">
-                <p class="panel-title">Campaign performance</p>
-                <div class="kpi-row">
-                  <div class="kpi-tile">
-                    <span class="kpi-icon"><svg class="icon" aria-hidden="true"><use href="#icon-ads"/></svg></span>
-                    <span class="kpi-label">Impressions</span>
-                    <span class="kpi-value">482K</span>
-                    <span class="kpi-delta"><svg class="icon" aria-hidden="true"><use href="#icon-trend"/></svg>+18% this month</span>
-                  </div>
-                  <div class="kpi-tile">
-                    <span class="kpi-icon"><svg class="icon" aria-hidden="true"><use href="#icon-seo"/></svg></span>
-                    <span class="kpi-label">Clicks</span>
-                    <span class="kpi-value">9.4K</span>
-                    <span class="kpi-delta"><svg class="icon" aria-hidden="true"><use href="#icon-trend"/></svg>+9% this month</span>
-                  </div>
-                  <div class="kpi-tile">
-                    <span class="kpi-icon"><svg class="icon" aria-hidden="true"><use href="#icon-social"/></svg></span>
-                    <span class="kpi-label">CTR</span>
-                    <span class="kpi-value">1.9%</span>
-                    <span class="kpi-delta neutral">steady</span>
-                  </div>
-                  <div class="kpi-tile">
-                    <span class="kpi-icon"><svg class="icon" aria-hidden="true"><use href="#icon-tag"/></svg></span>
-                    <span class="kpi-label">Cost / lead</span>
-                    <span class="kpi-value">$6.40</span>
-                    <span class="kpi-delta neutral">steady</span>
-                  </div>
+            <div class="kit-body" id="kit-body" role="tabpanel" aria-labelledby="kit-tab-ember" tabindex="0">
+              <div class="kit-stage">
+                <div class="kit-lockup">
+                  <span class="kit-mark" data-mark>E</span>
+                  <span class="kit-word" data-word>Ember</span>
                 </div>
-                <div class="line-chart-wrap">
-                  <svg class="line-chart" viewBox="0 0 320 100" role="img" aria-label="Leads per week, rising from 9 in week one to 34 in week eight">
-                    <line class="grid-line" x1="0" y1="95" x2="320" y2="95"/>
-                    <line class="grid-line" x1="0" y1="57.5" x2="320" y2="57.5"/>
-                    <path class="area-fill" d="M10,90 L52.9,81.6 L95.7,84.4 L138.6,70.4 L181.4,62 L224.3,53.6 L267.1,39.6 L310,20 L310,95 L10,95 Z"/>
-                    <path class="line-path" pathLength="100" d="M10,90 L52.9,81.6 L95.7,84.4 L138.6,70.4 L181.4,62 L224.3,53.6 L267.1,39.6 L310,20"/>
-                    <circle class="end-dot" cx="310" cy="20" r="4.5"/>
-                    <text class="end-label" x="300" y="12" text-anchor="end">34</text>
-                  </svg>
-                  <div class="chart-x-axis">
-                    <span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span><span>W6</span><span>W7</span><span>W8</span>
-                  </div>
-                </div>
+                <span class="kit-tag" data-tagline>Hospitality &mdash; warm, tactile, confident</span>
               </div>
-            </div>
 
-            <div class="app-frame" data-reveal>
-              <div class="app-frame-bar">
-                <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-                <span class="app-frame-url">app.kebinternational.com/content</span>
-              </div>
-              <div class="app-frame-body">
-                <p class="panel-title">Content calendar</p>
-                <div class="content-grid" role="img" aria-label="Content calendar grid showing eight scheduled or live posts across reels, posts, carousels, and ads">
-                  <div class="content-card" style="background:linear-gradient(135deg,#2fd6bd,#0b3830)">
-                    <span class="badge live">Live</span>
-                    <span class="type"><svg class="icon" aria-hidden="true"><use href="#icon-video"/></svg>Reel</span>
-                  </div>
-                  <div class="content-card" style="background:linear-gradient(135deg,#e8a24a,#3a2810)">
-                    <span class="badge scheduled">Scheduled</span>
-                    <span class="type"><svg class="icon" aria-hidden="true"><use href="#icon-social"/></svg>Post</span>
-                  </div>
-                  <div class="content-card" style="background:linear-gradient(135deg,#2fd6bd,#e8a24a)">
-                    <span class="badge scheduled">Scheduled</span>
-                    <span class="type"><svg class="icon" aria-hidden="true"><use href="#icon-branding"/></svg>Carousel</span>
-                  </div>
-                  <div class="content-card" style="background:linear-gradient(135deg,#163c37,#0a1e1b)">
-                    <span class="badge live">Live</span>
-                    <span class="type"><svg class="icon" aria-hidden="true"><use href="#icon-ads"/></svg>Ad</span>
-                  </div>
-                  <div class="content-card" style="background:linear-gradient(135deg,#4a3419,#1c130a)">
-                    <span class="badge scheduled">Scheduled</span>
-                    <span class="type"><svg class="icon" aria-hidden="true"><use href="#icon-video"/></svg>Reel</span>
-                  </div>
-                  <div class="content-card" style="background:linear-gradient(135deg,#e8a24a,#2fd6bd)">
-                    <span class="badge live">Live</span>
-                    <span class="type"><svg class="icon" aria-hidden="true"><use href="#icon-social"/></svg>Post</span>
-                  </div>
-                  <div class="content-card" style="background:linear-gradient(135deg,#1c554c,#08120f)">
-                    <span class="badge scheduled">Scheduled</span>
-                    <span class="type"><svg class="icon" aria-hidden="true"><use href="#icon-branding"/></svg>Carousel</span>
-                  </div>
-                  <div class="content-card" style="background:linear-gradient(135deg,#8a5a22,#1c130a)">
-                    <span class="badge scheduled">Scheduled</span>
-                    <span class="type"><svg class="icon" aria-hidden="true"><use href="#icon-ads"/></svg>Ad</span>
+              <div class="kit-detail">
+                <div class="kit-block">
+                  <span class="kit-label">Palette</span>
+                  <div class="kit-swatches">
+                    <span class="kit-sw sw1"></span><span class="kit-sw sw2"></span><span class="kit-sw sw3"></span><span class="kit-sw sw4"></span>
                   </div>
                 </div>
-                <p class="content-caption">8 pieces in production this week across social, ads, and video.</p>
-              </div>
-            </div>
-
-            <div class="showcase-phone" data-reveal>
-              <div class="phone-frame">
-                <div class="phone-notch"></div>
-                <div class="phone-body">
-                  <p class="phone-header">Leads</p>
-                  <ul class="phone-list">
-                    <li>
-                      <span class="avatar">AK</span>
-                      <span class="who"><strong>Amir K.</strong><small>Contacted &middot; 2h ago</small></span>
-                      <span class="pill hot">Hot</span>
-                    </li>
-                    <li>
-                      <span class="avatar">SR</span>
-                      <span class="who"><strong>Sara R.</strong><small>New lead &middot; 4h ago</small></span>
-                      <span class="pill new">New</span>
-                    </li>
-                    <li>
-                      <span class="avatar">MF</span>
-                      <span class="who"><strong>Medhat F.</strong><small>Deal signed &middot; 1d ago</small></span>
-                      <span class="pill won">Won</span>
-                    </li>
-                    <li>
-                      <span class="avatar">NH</span>
-                      <span class="who"><strong>Nour H.</strong><small>Follow-up &middot; 1d ago</small></span>
-                      <span class="pill hot">Hot</span>
-                    </li>
-                  </ul>
+                <div class="kit-block">
+                  <span class="kit-label">Type</span>
+                  <p class="kit-specimen" data-specimen>Built to be remembered</p>
+                  <p class="kit-specimen-sub" data-specimen-sub>Fraunces &middot; 700 / italic</p>
+                </div>
+                <div class="kit-block">
+                  <span class="kit-label">Carries across</span>
+                  <div class="kit-chips">
+                    <span class="kit-chip">Logo</span><span class="kit-chip">Site</span><span class="kit-chip">Social</span><span class="kit-chip">Ads</span><span class="kit-chip">Deck</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <p class="showcase-caption">Illustrative product UI &mdash; sample data, not a live client dashboard.</p>
+          <div class="ba-wrap">
+            <div class="ba-head">
+              <h4>Same offer, rebuilt</h4>
+              <span class="ba-hint">Drag to compare</span>
+            </div>
+            <div class="ba" style="--pos:52%">
+              <div class="ba-pane ba-before">
+                <div class="ba-card ba-card-old">
+                  <p class="old-kicker">*** SPECIAL OFFER ***</p>
+                  <p class="old-title">We Are The Best Company For All Of Your Business Needs And Solutions</p>
+                  <p class="old-body">Contact us today to learn more about our wide range of services and solutions for your business needs. Call now! Limited time only. Terms and conditions apply.</p>
+                  <span class="old-btn">CLICK HERE NOW</span>
+                </div>
+                <span class="ba-flag flag-before">Before</span>
+              </div>
+              <div class="ba-pane ba-after">
+                <div class="ba-card ba-card-new">
+                  <span class="new-kicker">Launch campaign</span>
+                  <p class="new-title">Every table<br>booked by 7pm.</p>
+                  <p class="new-body">One offer. One action. Nothing competing for the eye.</p>
+                  <span class="new-btn">Reserve a table &rarr;</span>
+                </div>
+                <span class="ba-flag flag-after">After</span>
+              </div>
+              <input type="range" class="ba-range" min="0" max="100" value="52" aria-label="Drag to compare the before and after creative">
+              <span class="ba-divider" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <div class="app-frame studio-frame" data-reveal>
+            <div class="app-frame-bar">
+              <span class="dot r" aria-hidden="true"></span><span class="dot y" aria-hidden="true"></span><span class="dot g" aria-hidden="true"></span>
+              <span class="app-frame-url">app.kebinternational.com/content</span>
+            </div>
+            <div class="app-frame-body">
+              <p class="panel-title">Content calendar</p>
+              <div class="content-grid" role="img" aria-label="Content calendar grid showing eight scheduled or live posts across reels, posts, carousels, and ads">
+                <div class="content-card" style="background:linear-gradient(135deg,#2fd6bd,#0b3830)">
+                  <span class="badge live">Live</span>
+                  <span class="type"><svg class="icon" aria-hidden="true"><use href="#icon-video"/></svg>Reel</span>
+                </div>
+                <div class="content-card" style="background:linear-gradient(135deg,#e8a24a,#3a2810)">
+                  <span class="badge scheduled">Scheduled</span>
+                  <span class="type"><svg class="icon" aria-hidden="true"><use href="#icon-social"/></svg>Post</span>
+                </div>
+                <div class="content-card" style="background:linear-gradient(135deg,#2fd6bd,#e8a24a)">
+                  <span class="badge scheduled">Scheduled</span>
+                  <span class="type"><svg class="icon" aria-hidden="true"><use href="#icon-branding"/></svg>Carousel</span>
+                </div>
+                <div class="content-card" style="background:linear-gradient(135deg,#163c37,#0a1e1b)">
+                  <span class="badge live">Live</span>
+                  <span class="type"><svg class="icon" aria-hidden="true"><use href="#icon-ads"/></svg>Ad</span>
+                </div>
+                <div class="content-card" style="background:linear-gradient(135deg,#4a3419,#1c130a)">
+                  <span class="badge scheduled">Scheduled</span>
+                  <span class="type"><svg class="icon" aria-hidden="true"><use href="#icon-video"/></svg>Reel</span>
+                </div>
+                <div class="content-card" style="background:linear-gradient(135deg,#e8a24a,#2fd6bd)">
+                  <span class="badge live">Live</span>
+                  <span class="type"><svg class="icon" aria-hidden="true"><use href="#icon-social"/></svg>Post</span>
+                </div>
+                <div class="content-card" style="background:linear-gradient(135deg,#1c554c,#08120f)">
+                  <span class="badge scheduled">Scheduled</span>
+                  <span class="type"><svg class="icon" aria-hidden="true"><use href="#icon-branding"/></svg>Carousel</span>
+                </div>
+                <div class="content-card" style="background:linear-gradient(135deg,#8a5a22,#1c130a)">
+                  <span class="badge scheduled">Scheduled</span>
+                  <span class="type"><svg class="icon" aria-hidden="true"><use href="#icon-ads"/></svg>Ad</span>
+                </div>
+              </div>
+              <p class="content-caption">8 pieces in production this week across social, ads, and video.</p>
+            </div>
+          </div>
+
+          <p class="showcase-caption">Illustrative brand directions and creative &mdash; sample work, not live client assets.</p>
         </div>
       </div>
     </section>
@@ -2099,6 +2484,91 @@
     });
   }
 
+  /* ---------- hero demo view switcher ---------- */
+  var demoTabs = Array.prototype.slice.call(document.querySelectorAll(".app-nav [role=tab]"));
+  var frameUrl = document.getElementById("appFrameUrl");
+
+  function selectDemoTab(tab, focusIt){
+    demoTabs.forEach(function(t){
+      var selected = t === tab;
+      t.classList.toggle("active", selected);
+      t.setAttribute("aria-selected", selected ? "true" : "false");
+      if (selected) t.removeAttribute("tabindex");
+      else t.setAttribute("tabindex", "-1");
+      var panel = document.getElementById(t.getAttribute("aria-controls"));
+      if (panel){
+        panel.hidden = !selected;
+        panel.classList.toggle("active", selected);
+      }
+    });
+    if (frameUrl && tab.dataset.url) frameUrl.textContent = tab.dataset.url;
+    if (focusIt) tab.focus();
+  }
+
+  demoTabs.forEach(function(tab, i){
+    tab.addEventListener("click", function(){ selectDemoTab(tab, false); });
+    tab.addEventListener("keydown", function(e){
+      var dir = e.key === "ArrowDown" || e.key === "ArrowRight" ? 1
+              : e.key === "ArrowUp" || e.key === "ArrowLeft" ? -1 : 0;
+      if (!dir) return;
+      e.preventDefault();
+      selectDemoTab(demoTabs[(i + dir + demoTabs.length) % demoTabs.length], true);
+    });
+  });
+
+  /* ---------- brand kit explorer ---------- */
+  var kitData = {
+    ember:   { mark:"E", word:"Ember",   tag:"Hospitality — warm, tactile, confident", spec:"Built to be remembered", sub:"Fraunces · 700 / italic" },
+    marine:  { mark:"M", word:"Marine",  tag:"Fintech — calm, precise, trustworthy",    spec:"Clarity at every step",  sub:"IBM Plex Sans · 600 / wide" },
+    verdant: { mark:"V", word:"Verdant", tag:"Wellness — natural, open, unhurried",     spec:"Room to breathe",        sub:"Fraunces · 400 / regular" }
+  };
+  var kit = document.querySelector(".kit");
+  if (kit){
+    var kitTabs = Array.prototype.slice.call(kit.querySelectorAll(".kit-tab"));
+    var kitBody = kit.querySelector(".kit-body");
+
+    function setKit(tab, focusIt){
+      var key = tab.dataset.kitSet;
+      var d = kitData[key];
+      if (!d) return;
+      kit.dataset.kit = key;
+      kitTabs.forEach(function(t){
+        var on = t === tab;
+        t.classList.toggle("active", on);
+        t.setAttribute("aria-selected", on ? "true" : "false");
+        if (on) t.removeAttribute("tabindex");
+        else t.setAttribute("tabindex", "-1");
+      });
+      if (kitBody) kitBody.setAttribute("aria-labelledby", tab.id);
+      kit.querySelector("[data-mark]").textContent = d.mark;
+      kit.querySelector("[data-word]").textContent = d.word;
+      kit.querySelector("[data-tagline]").textContent = d.tag;
+      kit.querySelector("[data-specimen]").textContent = d.spec;
+      kit.querySelector("[data-specimen-sub]").textContent = d.sub;
+      if (focusIt) tab.focus();
+    }
+
+    kitTabs.forEach(function(tab, i){
+      tab.addEventListener("click", function(){ setKit(tab, false); });
+      tab.addEventListener("keydown", function(e){
+        var dir = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1
+                : e.key === "ArrowLeft" || e.key === "ArrowUp" ? -1 : 0;
+        if (!dir) return;
+        e.preventDefault();
+        setKit(kitTabs[(i + dir + kitTabs.length) % kitTabs.length], true);
+      });
+    });
+  }
+
+  /* ---------- before / after slider ---------- */
+  var baRange = document.querySelector(".ba-range");
+  if (baRange){
+    var baBox = baRange.closest(".ba");
+    baRange.addEventListener("input", function(){
+      baBox.style.setProperty("--pos", baRange.value + "%");
+    });
+  }
+
   /* ---------- hero cursor glow + preview tilt ---------- */
   var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   var heroEl = document.querySelector(".hero");
@@ -2110,20 +2580,6 @@
       heroEl.style.setProperty("--mx", x + "%");
       heroEl.style.setProperty("--my", y + "%");
     }, { passive: true });
-  }
-
-  var previewCard = document.querySelector(".hero-preview .app-frame");
-  if (previewCard && finePointer && !reduceMotion){
-    previewCard.addEventListener("pointermove", function(e){
-      var rect = previewCard.getBoundingClientRect();
-      var px = (e.clientX - rect.left) / rect.width - 0.5;
-      var py = (e.clientY - rect.top) / rect.height - 0.5;
-      previewCard.style.transform =
-        "perspective(1400px) rotateX(" + (-py * 5).toFixed(2) + "deg) rotateY(" + (px * 5).toFixed(2) + "deg)";
-    }, { passive: true });
-    previewCard.addEventListener("pointerleave", function(){
-      previewCard.style.transform = "";
-    });
   }
 
   /* ---------- ecosystem canvas ---------- */
