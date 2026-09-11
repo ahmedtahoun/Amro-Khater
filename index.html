@@ -463,69 +463,74 @@
   /* ---------- vision/mission ---------- */
   .vm-grid{
     display:grid;
-    gap:1px;
-    background:var(--line);
-    border:1px solid var(--line);
-    border-radius:12px;
-    overflow:hidden;
-    margin-top:36px;
+    gap:16px;
+    margin-top:32px;
   }
   @media (min-width:700px){
     .vm-grid{grid-template-columns:1fr 1fr;}
   }
   .vm-card{
     background:var(--ground-2);
-    padding:32px;
-    border-left:3px solid var(--amber);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:28px;
+    transition:transform .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);
   }
-  .vm-card.mission{border-left-color:var(--teal);}
+  .vm-card:hover{
+    transform:translateY(-3px);
+    border-color:var(--ink-faint);
+    box-shadow:0 22px 44px -26px rgba(0,0,0,.7);
+  }
+  .vm-card .icon-badge{
+    width:38px;
+    height:38px;
+    border-radius:10px;
+    background:var(--amber-dim);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:16px;
+  }
+  .vm-card.mission .icon-badge{background:var(--teal-dim);}
+  .icon{width:20px; height:20px; flex-shrink:0;}
+  .vm-card .icon-badge .icon{width:19px; height:19px; color:var(--amber);}
+  .vm-card.mission .icon-badge .icon{color:var(--teal);}
   .vm-card .label{
     font-family:var(--font-mono);
     font-size:.7rem;
     letter-spacing:.14em;
     text-transform:uppercase;
-    color:var(--amber);
+    color:var(--ink-faint);
     display:block;
-    margin-bottom:14px;
+    margin-bottom:10px;
   }
-  .vm-card.mission .label{color:var(--teal);}
   .vm-card blockquote{
     margin:0;
     font-family:var(--font-display);
     font-style:italic;
-    font-size:1.15rem;
-    line-height:1.5;
+    font-size:1.05rem;
+    line-height:1.48;
     color:var(--ink);
     font-weight:500;
   }
-  .vm-card .label{display:flex; align-items:center; gap:8px;}
-  .icon{width:20px; height:20px; flex-shrink:0;}
-  .vm-card .icon{width:18px; height:18px; color:var(--amber);}
-  .vm-card.mission .icon{color:var(--teal);}
 
   /* ---------- services ---------- */
   .svc-intro{max-width:64ch; margin-top:18px;}
-  .svc-grid{
-    display:grid;
-    gap:20px;
+
+  .svc-tracks{
+    display:flex;
+    flex-direction:column;
+    gap:40px;
     margin-top:36px;
   }
-  @media (min-width:800px){
-    .svc-grid{grid-template-columns:1fr 1fr;}
+  .svc-track-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    flex-wrap:wrap;
+    margin-bottom:16px;
   }
-  .svc-card{
-    background:var(--ground-2);
-    border:1px solid var(--line);
-    border-radius:12px;
-    padding:28px;
-    transition:transform .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);
-  }
-  .svc-card:hover{
-    transform:translateY(-3px);
-    border-color:var(--ink-faint);
-    box-shadow:0 24px 48px -28px rgba(0,0,0,.7);
-  }
-  .svc-card .kicker{
+  .svc-track-head .kicker{
     display:flex;
     align-items:center;
     gap:8px;
@@ -534,37 +539,55 @@
     letter-spacing:.14em;
     text-transform:uppercase;
     color:var(--ink-faint);
-    margin-bottom:6px;
   }
-  .svc-card .kicker::before{
+  .svc-track-head .kicker::before{
     content:"";
     width:7px;height:7px;border-radius:50%;
     background:var(--teal);
     display:inline-block;
   }
-  .svc-card.growth .kicker::before{background:var(--amber);}
-  .svc-card h3{font-size:1.3rem; margin-bottom:20px;}
-  .svc-item{
-    padding:14px 0;
-    border-top:1px solid var(--line);
+  .svc-track.growth .svc-track-head .kicker::before{background:var(--amber);}
+  .svc-track-head h3{font-size:1.2rem; margin:0;}
+
+  .svc-tiles{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+    gap:16px;
   }
-  .svc-item:first-of-type{border-top:none; padding-top:0;}
+  .svc-tile{
+    background:var(--ground-2);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:22px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    transition:transform .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);
+  }
+  .svc-tile:hover{
+    transform:translateY(-3px);
+    border-color:var(--ink-faint);
+    box-shadow:0 22px 44px -26px rgba(0,0,0,.7);
+  }
+  .svc-tile.featured{grid-column:span 2;}
+  @media (max-width:539.98px){
+    .svc-tile.featured{grid-column:span 1;}
+  }
   .svc-item-head{
     display:flex;
     align-items:center;
     gap:10px;
-    margin-bottom:6px;
   }
-  .svc-item h4{
+  .svc-tile h4{
     margin:0;
     font-size:.98rem;
     font-weight:600;
     color:var(--teal);
   }
-  .svc-card.growth .svc-item h4{color:var(--amber);}
+  .svc-track.growth .svc-tile h4{color:var(--amber);}
   .svc-item-head .icon{color:var(--teal);}
-  .svc-card.growth .svc-item-head .icon{color:var(--amber);}
-  .svc-item p{margin:0; font-size:.92rem;}
+  .svc-track.growth .svc-item-head .icon{color:var(--amber);}
+  .svc-tile p{margin:0; font-size:.9rem;}
 
   .status-row{
     display:flex;
@@ -593,7 +616,7 @@
   .status-item strong{color:var(--ink); font-weight:600;}
 
   /* ---------- showcase (product UI mockups) ---------- */
-  .showcase{margin-top:56px; padding-top:48px; border-top:1px solid var(--line);}
+  .showcase{margin-top:44px; padding-top:36px; border-top:1px solid var(--line);}
   .showcase-label{
     font-family:var(--font-mono);
     font-size:.7rem;
@@ -605,11 +628,17 @@
   .showcase h3{font-size:1.4rem; max-width:36ch;}
   .showcase-sub{max-width:56ch; margin-top:14px; font-size:.94rem;}
 
-  .showcase-grid{display:grid; gap:20px; margin-top:32px;}
+  .showcase-grid{display:grid; gap:16px; margin-top:26px; align-items:start;}
   @media (min-width:820px){
     .showcase-grid{grid-template-columns:1fr 1fr;}
   }
-  .showcase-phone{grid-column:1/-1; display:flex; justify-content:center;}
+  @media (min-width:1090px){
+    .showcase-grid{grid-template-columns:1.15fr 1.15fr .85fr;}
+  }
+  .showcase-phone{display:flex; justify-content:center;}
+  @media (max-width:1089.98px){
+    .showcase-phone{grid-column:1/-1;}
+  }
 
   .app-frame{
     background:var(--ground-2);
@@ -646,20 +675,20 @@
     text-overflow:ellipsis;
     white-space:nowrap;
   }
-  .app-frame-body{padding:24px;}
+  .app-frame-body{padding:22px;}
   .panel-title{
     font-family:var(--font-display);
     font-weight:700;
     font-size:1.02rem;
     color:var(--ink);
-    margin:0 0 18px;
+    margin:0 0 16px;
   }
 
   .kpi-row{
     display:grid;
     grid-template-columns:repeat(2, 1fr);
-    gap:12px;
-    margin-bottom:26px;
+    gap:10px;
+    margin-bottom:22px;
   }
   .kpi-tile{
     background:var(--ground);
@@ -1200,11 +1229,13 @@
         <h2>Why KEB exists</h2>
         <div class="vm-grid">
           <div class="vm-card vision">
-            <span class="label"><svg class="icon" aria-hidden="true"><use href="#icon-compass"/></svg>Vision</span>
+            <div class="icon-badge"><svg class="icon" aria-hidden="true"><use href="#icon-compass"/></svg></div>
+            <span class="label">Vision</span>
             <blockquote>A region where growing businesses run on one connected ecosystem &mdash; software shaped around how they actually work, and marketing shaped around who they actually serve &mdash; instead of a patchwork of disconnected tools and vendors.</blockquote>
           </div>
           <div class="vm-card mission">
-            <span class="label"><svg class="icon" aria-hidden="true"><use href="#icon-flag"/></svg>Mission</span>
+            <div class="icon-badge"><svg class="icon" aria-hidden="true"><use href="#icon-flag"/></svg></div>
+            <span class="label">Mission</span>
             <blockquote>We build the CRM systems that run a business and the campaigns that grow it as one connected practice, so every client gets an ecosystem designed to work together from day one &mdash; not two vendors bolted together after the fact.</blockquote>
           </div>
         </div>
@@ -1217,46 +1248,54 @@
         <h2>Two disciplines, one team</h2>
         <p class="svc-intro">Most businesses hire a developer for their systems and a separate agency for their marketing, then spend time keeping the two in sync. KEB does both, so they're never out of sync in the first place.</p>
 
-        <div class="svc-grid">
-          <div class="svc-card systems">
-            <span class="kicker">Systems</span>
-            <h3>Software Development</h3>
-            <div class="svc-item">
-              <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-crm"/></svg><h4>Custom CRM software</h4></div>
-              <p>A system modeled on how your team actually sells and supports &mdash; not a generic template you have to bend your process around.</p>
+        <div class="svc-tracks">
+          <div class="svc-track">
+            <div class="svc-track-head">
+              <span class="kicker">Systems</span>
+              <h3>Software Development</h3>
             </div>
-            <div class="svc-item">
-              <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-website"/></svg><h4>Website development</h4></div>
-              <p>Marketing sites and web apps designed around your brand and built to convert visitors into leads.</p>
-            </div>
-            <div class="svc-item">
-              <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-mobile"/></svg><h4>Mobile app implementation</h4></div>
-              <p>iOS and Android apps built and shipped, from spec through app-store release.</p>
+            <div class="svc-tiles">
+              <div class="svc-tile featured">
+                <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-crm"/></svg><h4>Custom CRM software</h4></div>
+                <p>A system modeled on how your team actually sells and supports &mdash; not a generic template you have to bend your process around.</p>
+              </div>
+              <div class="svc-tile">
+                <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-website"/></svg><h4>Website development</h4></div>
+                <p>Marketing sites and web apps designed around your brand and built to convert visitors into leads.</p>
+              </div>
+              <div class="svc-tile">
+                <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-mobile"/></svg><h4>Mobile app implementation</h4></div>
+                <p>iOS and Android apps built and shipped, from spec through app-store release.</p>
+              </div>
             </div>
           </div>
 
-          <div class="svc-card growth">
-            <span class="kicker">Growth</span>
-            <h3>Marketing &amp; Creative</h3>
-            <div class="svc-item">
-              <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-social"/></svg><h4>Social Media Management</h4></div>
-              <p>A consistent posting calendar and voice across the channels your audience uses.</p>
+          <div class="svc-track growth">
+            <div class="svc-track-head">
+              <span class="kicker">Growth</span>
+              <h3>Marketing &amp; Creative</h3>
             </div>
-            <div class="svc-item">
-              <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-seo"/></svg><h4>SEO</h4></div>
-              <p>Technical fixes and content structure aimed at ranking for what your customers actually search.</p>
-            </div>
-            <div class="svc-item">
-              <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-ads"/></svg><h4>Paid ads</h4></div>
-              <p>Campaigns on the platforms where your buyers already are, with budgets tracked to results.</p>
-            </div>
-            <div class="svc-item">
-              <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-branding"/></svg><h4>Branding</h4></div>
-              <p>Identity, voice, and visual system that carries across your site, product, and campaigns.</p>
-            </div>
-            <div class="svc-item">
-              <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-video"/></svg><h4>AI videos</h4></div>
-              <p>AI-produced video content for ads, social, and product demos, turned around fast.</p>
+            <div class="svc-tiles">
+              <div class="svc-tile">
+                <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-social"/></svg><h4>Social Media Management</h4></div>
+                <p>A consistent posting calendar and voice across the channels your audience uses.</p>
+              </div>
+              <div class="svc-tile">
+                <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-seo"/></svg><h4>SEO</h4></div>
+                <p>Technical fixes and content structure aimed at ranking for what your customers actually search.</p>
+              </div>
+              <div class="svc-tile">
+                <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-ads"/></svg><h4>Paid ads</h4></div>
+                <p>Campaigns on the platforms where your buyers already are, with budgets tracked to results.</p>
+              </div>
+              <div class="svc-tile">
+                <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-branding"/></svg><h4>Branding</h4></div>
+                <p>Identity, voice, and visual system that carries across your site, product, and campaigns.</p>
+              </div>
+              <div class="svc-tile">
+                <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-video"/></svg><h4>AI videos</h4></div>
+                <p>AI-produced video content for ads, social, and product demos, turned around fast.</p>
+              </div>
             </div>
           </div>
         </div>
