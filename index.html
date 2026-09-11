@@ -327,6 +327,14 @@
     mask-image:linear-gradient(to bottom, black 0%, black 45%, transparent 92%);
     -webkit-mask-image:linear-gradient(to bottom, black 0%, black 45%, transparent 92%);
   }
+  .hero-glow{
+    position:absolute;
+    inset:-40px -24px auto -24px;
+    height:820px;
+    pointer-events:none;
+    background:radial-gradient(520px circle at var(--mx, 72%) var(--my, 18%), rgba(47,214,189,.16), transparent 62%);
+    transition:background .18s ease-out;
+  }
   .hero-canvas-wrap{
     position:absolute;
     inset:-40px -24px auto -24px;
@@ -453,6 +461,40 @@
     max-width:1040px;
     margin-inline:auto;
     box-shadow:0 40px 90px -30px rgba(0,0,0,.7);
+    transition:transform .12s ease-out, box-shadow .25s var(--ease);
+    will-change:transform;
+  }
+
+  /* ---------- ticker ---------- */
+  .ticker{
+    overflow:hidden;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    background:var(--ground-2);
+    padding:15px 0;
+    mask-image:linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    -webkit-mask-image:linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  }
+  .ticker-track{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    white-space:nowrap;
+    width:max-content;
+    font-family:var(--font-mono);
+    font-size:.82rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-dim);
+    animation:tickerScroll 34s linear infinite;
+  }
+  .ticker-track .tick-dot{color:var(--teal);}
+  @keyframes tickerScroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ticker-track{animation:none;}
   }
   .hero-preview .kpi-row{margin-bottom:0;}
   @media (max-width:719.98px){
@@ -1328,6 +1370,7 @@
 
     <section id="overview" class="hero">
       <div class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-glow" aria-hidden="true"></div>
       <div class="hero-canvas-wrap" aria-hidden="true">
         <canvas id="ecosystemCanvas"></canvas>
       </div>
@@ -1464,6 +1507,27 @@
         </div>
       </div>
     </section>
+
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>Custom CRM</span><span class="tick-dot">&bull;</span>
+        <span>Websites</span><span class="tick-dot">&bull;</span>
+        <span>Mobile Apps</span><span class="tick-dot">&bull;</span>
+        <span>Branding</span><span class="tick-dot">&bull;</span>
+        <span>Paid Ads</span><span class="tick-dot">&bull;</span>
+        <span>Social Media</span><span class="tick-dot">&bull;</span>
+        <span>SEO</span><span class="tick-dot">&bull;</span>
+        <span>AI Videos</span><span class="tick-dot">&bull;</span>
+        <span>Custom CRM</span><span class="tick-dot">&bull;</span>
+        <span>Websites</span><span class="tick-dot">&bull;</span>
+        <span>Mobile Apps</span><span class="tick-dot">&bull;</span>
+        <span>Branding</span><span class="tick-dot">&bull;</span>
+        <span>Paid Ads</span><span class="tick-dot">&bull;</span>
+        <span>Social Media</span><span class="tick-dot">&bull;</span>
+        <span>SEO</span><span class="tick-dot">&bull;</span>
+        <span>AI Videos</span><span class="tick-dot">&bull;</span>
+      </div>
+    </div>
 
     <section id="vision">
       <div class="max-content" data-reveal>
@@ -1978,6 +2042,89 @@
     }
   }, { passive: true });
   updatePipeline();
+
+  /* ---------- number count-up ---------- */
+  function parseValue(el){
+    var original = el.textContent.trim();
+    var match = original.match(/^([^\d]*)([\d,]+(?:\.\d+)?)(.*)$/);
+    if (!match) return null;
+    var numStr = match[2].replace(/,/g, "");
+    var target = parseFloat(numStr);
+    if (isNaN(target)) return null;
+    return {
+      original: original,
+      prefix: match[1],
+      suffix: match[3],
+      target: target,
+      decimals: numStr.indexOf(".") > -1 ? numStr.split(".")[1].length : 0
+    };
+  }
+
+  function render(el, spec, value){
+    el.textContent = spec.prefix + value.toLocaleString("en-US", {
+      minimumFractionDigits: spec.decimals,
+      maximumFractionDigits: spec.decimals
+    }) + spec.suffix;
+  }
+
+  function animateValue(el, spec){
+    var duration = 1000;
+    var start = null;
+    function tick(now){
+      if (start === null) start = now;
+      var p = Math.min((now - start) / duration, 1);
+      render(el, spec, spec.target * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(tick);
+      else el.textContent = spec.original;
+    }
+    requestAnimationFrame(tick);
+  }
+
+  if ("IntersectionObserver" in window && !reduceMotion){
+    var cio = new IntersectionObserver(function(entries, obs){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting){
+          animateValue(entry.target, entry.target._countSpec);
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.25 });
+
+    document.querySelectorAll(".kpi-value, .funnel-value, .donut-value").forEach(function(el){
+      var spec = parseValue(el);
+      if (!spec) return;
+      el._countSpec = spec;
+      render(el, spec, 0);
+      cio.observe(el);
+    });
+  }
+
+  /* ---------- hero cursor glow + preview tilt ---------- */
+  var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  var heroEl = document.querySelector(".hero");
+  if (heroEl && finePointer && !reduceMotion){
+    heroEl.addEventListener("pointermove", function(e){
+      var rect = heroEl.getBoundingClientRect();
+      var x = ((e.clientX - rect.left) / rect.width) * 100;
+      var y = ((e.clientY - rect.top) / rect.height) * 100;
+      heroEl.style.setProperty("--mx", x + "%");
+      heroEl.style.setProperty("--my", y + "%");
+    }, { passive: true });
+  }
+
+  var previewCard = document.querySelector(".hero-preview .app-frame");
+  if (previewCard && finePointer && !reduceMotion){
+    previewCard.addEventListener("pointermove", function(e){
+      var rect = previewCard.getBoundingClientRect();
+      var px = (e.clientX - rect.left) / rect.width - 0.5;
+      var py = (e.clientY - rect.top) / rect.height - 0.5;
+      previewCard.style.transform =
+        "perspective(1400px) rotateX(" + (-py * 5).toFixed(2) + "deg) rotateY(" + (px * 5).toFixed(2) + "deg)";
+    }, { passive: true });
+    previewCard.addEventListener("pointerleave", function(){
+      previewCard.style.transform = "";
+    });
+  }
 
   /* ---------- ecosystem canvas ---------- */
   var canvas = document.getElementById("ecosystemCanvas");
