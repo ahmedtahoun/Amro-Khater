@@ -1691,6 +1691,8 @@
     font-size:1rem;
     line-height:1.5;
   }
+  /* tap target: keep these at least 24px tall on touch */
+  .contact-card a{display:inline-block; padding:5px 0;}
   .contact-card a:hover{color:var(--teal);}
 
   .lead-form{
@@ -1821,7 +1823,7 @@
   .footer-brand .wordmark{font-size:1.1rem; white-space:normal; display:block; margin-bottom:8px;}
   .footer-brand .tagline{margin:0 0 18px; max-width:34ch;}
   .footer-cta{font-size:.76rem; padding:11px 18px;}
-  .footer-col{display:flex; flex-direction:column; gap:9px;}
+  .footer-col{display:flex; flex-direction:column; gap:4px;}
   .footer-heading{
     font-family:var(--font-mono);
     font-size:.64rem;
@@ -1839,6 +1841,9 @@
     line-height:1.5;
     transition:color .2s var(--ease);
   }
+  /* tap target: keep footer links at least 24px tall on touch */
+  .footer-col a{display:inline-block; padding:5px 0;}
+  .footer-col address{padding-top:5px;}
   .footer-col a:hover{color:var(--teal);}
 
   .footer-row{
@@ -1979,9 +1984,10 @@
       <li><a href="#overview" data-nav><span class="n">00</span>Overview</a></li>
       <li><a href="#vision" data-nav><span class="n">01</span>Vision &amp; Mission</a></li>
       <li><a href="#services" data-nav><span class="n">02</span>Services</a></li>
-      <li><a href="#approach" data-nav><span class="n">03</span>Approach</a></li>
-      <li><a href="#process" data-nav><span class="n">04</span>Process</a></li>
-      <li><a href="#contact" data-nav><span class="n">05</span>Contact</a></li>
+      <li><a href="#studio" data-nav><span class="n">03</span>Brand &amp; Creative</a></li>
+      <li><a href="#approach" data-nav><span class="n">04</span>Approach</a></li>
+      <li><a href="#process" data-nav><span class="n">05</span>Process</a></li>
+      <li><a href="#contact" data-nav><span class="n">06</span>Contact</a></li>
     </ul>
     <a href="#contact" class="btn btn-primary nav-cta">Start a project &rarr;</a>
   </nav>
@@ -2386,10 +2392,15 @@
           <div class="status-item"><span class="status-tag running">Running</span> Paid ad campaigns &mdash; managed for <strong>MediLink360 FZ-LLC</strong></div>
         </div>
 
-        <div class="showcase studio">
-          <p class="showcase-label">Brand &amp; Creative</p>
-          <h3>The other half of what we ship</h3>
-          <p class="showcase-sub">Systems are only half the job. This is the brand and content work that runs alongside them &mdash; sample directions, not live client assets.</p>
+      </div>
+    </section>
+
+    <section id="studio">
+      <div class="max-content" data-reveal>
+        <p class="eyebrow">Brand &amp; Creative</p>
+        <h2>The other half of what we ship</h2>
+        <p class="svc-intro">Systems are only half the job. This is the brand and content work that runs alongside them &mdash; sample directions, not live client assets.</p>
+        <div class="studio">
 
           <div class="kit" data-kit="ember">
             <div class="kit-tabs" role="tablist" aria-label="Brand directions">
