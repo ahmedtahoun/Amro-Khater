@@ -21,7 +21,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <script type="application/ld+json">
 {
@@ -166,6 +166,84 @@
     }
   }
 
+  /* ---------- Arabic / RTL ----------
+     Swapping the three family tokens switches the whole page to the Arabic
+     face in one place. Letter-spacing is zeroed because Arabic is a connected
+     script and tracking breaks the joins. Numerals stay Western (0-9), which
+     is the business convention in the region. */
+  [dir="rtl"]{
+    --font-display:"IBM Plex Sans Arabic", "IBM Plex Sans", sans-serif;
+    --font-body:"IBM Plex Sans Arabic", "IBM Plex Sans", sans-serif;
+    --font-mono:"IBM Plex Sans Arabic", "IBM Plex Mono", monospace;
+  }
+  [dir="rtl"] body{letter-spacing:0;}
+  [dir="rtl"] .eyebrow,
+  [dir="rtl"] .tagline,
+  [dir="rtl"] .kicker,
+  [dir="rtl"] .showcase-label,
+  [dir="rtl"] .svc-disc,
+  [dir="rtl"] .status-tag,
+  [dir="rtl"] .kpi-label,
+  [dir="rtl"] .cred-label,
+  [dir="rtl"] .footer-heading,
+  [dir="rtl"] .tl-key,
+  [dir="rtl"] .tl-stage .stage,
+  [dir="rtl"] .field label,
+  [dir="rtl"] .kit-label,
+  [dir="rtl"] .kit-tab,
+  [dir="rtl"] .eco-btn,
+  [dir="rtl"] .btn,
+  [dir="rtl"] .nav-list a,
+  [dir="rtl"] h1,
+  [dir="rtl"] h2,
+  [dir="rtl"] h3,
+  [dir="rtl"] .kit-specimen,
+  [dir="rtl"] .wordmark{letter-spacing:0;}
+  /* Arabic runs heavier at the same size, so ease the line height */
+  [dir="rtl"] p,
+  [dir="rtl"] blockquote,
+  [dir="rtl"] li{line-height:1.75;}
+  [dir="rtl"] .hero h1{line-height:1.35;}
+  [dir="rtl"] h2{line-height:1.4;}
+  /* Latin fragments inside Arabic (brand, email, phone) keep LTR order */
+  [dir="rtl"] .ltr,
+  [dir="rtl"] .wordmark,
+  [dir="rtl"] .app-frame-url,
+  [dir="rtl"] .contact-card a[href^="mailto"],
+  [dir="rtl"] .contact-card a[href^="tel"],
+  [dir="rtl"] .footer-col a[href^="mailto"],
+  [dir="rtl"] .footer-col a[href^="tel"]{direction:ltr; unicode-bidi:isolate;}
+  [dir="rtl"] .contact-card a[href^="mailto"],
+  [dir="rtl"] .contact-card a[href^="tel"],
+  [dir="rtl"] .footer-col a[href^="mailto"],
+  [dir="rtl"] .footer-col a[href^="tel"]{text-align:right;}
+  /* the arrow in the CTA points the way the language reads */
+  [dir="rtl"] .btn .arrow-i{display:inline-block; transform:scaleX(-1);}
+
+  .lang-toggle{
+    display:inline-flex;
+    gap:2px;
+    padding:3px;
+    border-radius:999px;
+    background:var(--ground-2);
+    border:1px solid var(--line);
+    margin-top:22px;
+  }
+  .lang-btn{
+    font-family:var(--font-mono);
+    font-size:.7rem;
+    padding:7px 14px;
+    border-radius:999px;
+    border:none;
+    background:transparent;
+    color:var(--ink-faint);
+    cursor:pointer;
+    transition:background .2s var(--ease), color .2s var(--ease);
+  }
+  .lang-btn:hover{color:var(--ink);}
+  .lang-btn.active{background:var(--ground-3); color:var(--ink);}
+  .lang-btn[data-lang="ar"]{font-family:"IBM Plex Sans Arabic", sans-serif;}
+
   /* ---------- top bar (mobile) ---------- */
   .topbar{
     position:sticky;
@@ -245,11 +323,11 @@
     transition:color .2s var(--ease), padding-left .2s var(--ease);
   }
   .nav-list li:last-child a{border-bottom:1px solid var(--line);}
-  .nav-list a .n{color:var(--ink-faint); margin-right:10px;}
+  .nav-list a .n{color:var(--ink-faint); margin-inline-end:10px;}
   .nav-list a:hover{color:var(--ink);}
   .nav-list a[aria-current="true"]{
     color:var(--teal);
-    padding-left:6px;
+    padding-inline-start:6px;
   }
   .nav-list a[aria-current="true"] .n{color:var(--teal);}
 
@@ -442,8 +520,8 @@
   @media (min-width:1140px){
     .hero-float{display:inline-flex;}
   }
-  .hero-float-a{top:8%; right:6%; animation-delay:0s;}
-  .hero-float-b{top:46%; right:2%; animation-delay:-3.5s;}
+  .hero-float-a{top:8%; inset-inline-end:6%; animation-delay:0s;}
+  .hero-float-b{top:46%; inset-inline-end:2%; animation-delay:-3.5s;}
   @keyframes heroFloat{
     0%,100%{transform:translateY(0);}
     50%{transform:translateY(-10px);}
@@ -708,7 +786,7 @@
   .donut-legend{display:flex; flex-direction:column; gap:8px;}
   .donut-legend .d-item{display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:.72rem; color:var(--ink-dim);}
   .donut-legend .d-dot{width:8px; height:8px; border-radius:50%; flex-shrink:0;}
-  .donut-legend .d-item .d-val{margin-left:auto; color:var(--ink); font-variant-numeric:tabular-nums;}
+  .donut-legend .d-item .d-val{margin-inline-start:auto; color:var(--ink); font-variant-numeric:tabular-nums;}
 
   /* ---------- ecosystem diagram ---------- */
   .eco{margin-top:30px;}
@@ -1472,8 +1550,8 @@
     padding:4px 10px;
     border-radius:5px;
   }
-  .flag-before{right:14px; background:rgba(0,0,0,.6); color:#f0f0ec;}
-  .flag-after{left:14px; background:var(--teal); color:var(--teal-ink);}
+  .flag-before{inset-inline-end:14px; background:rgba(0,0,0,.6); color:#f0f0ec;}
+  .flag-after{inset-inline-start:14px; background:var(--teal); color:var(--teal-ink);}
   .ba-divider{
     position:absolute;
     top:0; bottom:0;
@@ -1547,6 +1625,92 @@
   .diff-item p{margin:0; font-size:.94rem;}
 
   /* ---------- process ---------- */
+  /* ---------- approach: credibility panel ---------- */
+  .cred{
+    display:grid;
+    gap:20px;
+    margin-top:32px;
+  }
+  @media (min-width:860px){
+    .cred{grid-template-columns:.9fr 1.1fr; align-items:start;}
+  }
+  .cred-live{
+    background:var(--ground-2);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:24px;
+    position:sticky;
+    top:24px;
+  }
+  @media (max-width:859.98px){
+    .cred-live{position:static;}
+  }
+  .cred-live-head{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    padding-bottom:16px;
+    margin-bottom:16px;
+    border-bottom:1px solid var(--line);
+  }
+  .cred-label{
+    font-family:var(--font-mono);
+    font-size:.62rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+  }
+  .cred-client{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:1.15rem;
+    color:var(--ink);
+  }
+  .cred-lines{display:flex; flex-direction:column; gap:12px;}
+  .cred-line{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    font-size:.88rem;
+    color:var(--ink-dim);
+  }
+  .cred-note{
+    margin:16px 0 0;
+    padding-top:16px;
+    border-top:1px solid var(--line);
+    font-size:.85rem;
+    color:var(--ink-faint);
+  }
+
+  .cred-commit{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+  }
+  .cred-commit li{
+    display:grid;
+    grid-template-columns:auto 1fr;
+    gap:16px;
+    padding:20px 0;
+    border-top:1px solid var(--line);
+  }
+  .cred-commit li:first-child{border-top:none; padding-top:0;}
+  .cred-check{
+    width:34px; height:34px;
+    border-radius:9px;
+    background:var(--teal-dim);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+  }
+  .cred-check .icon{width:17px; height:17px; color:var(--teal);}
+  .cred-commit h3{font-size:1.05rem; margin:0 0 7px;}
+  .cred-commit p{margin:0; font-size:.9rem;}
+
   /* ---------- process timeline ---------- */
   .tl-key{
     display:flex;
@@ -1745,7 +1909,19 @@
     border-color:var(--teal);
   }
   .field textarea{resize:vertical; min-height:110px;}
-  .hp-field{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;}
+  /* Honeypot. Clipped rather than pushed off-screen: a negative offset is
+     direction-dependent and blows out the document width under dir="rtl". */
+  .hp-field{
+    position:absolute;
+    width:1px; height:1px;
+    margin:-1px;
+    padding:0;
+    border:0;
+    overflow:hidden;
+    clip:rect(0 0 0 0);
+    clip-path:inset(50%);
+    white-space:nowrap;
+  }
   .form-foot{
     display:flex;
     align-items:center;
@@ -2005,6 +2181,10 @@
       <li><a href="#contact" data-nav><span class="n">06</span>Contact</a></li>
     </ul>
     <a href="#contact" class="btn btn-primary nav-cta">Start a project &rarr;</a>
+    <div class="lang-toggle" role="group" aria-label="Language / اللغة">
+      <button type="button" class="lang-btn active" data-lang="en" aria-pressed="true" lang="en">English</button>
+      <button type="button" class="lang-btn" data-lang="ar" aria-pressed="false" lang="ar">العربية</button>
+    </div>
   </nav>
 
   <main id="main">
@@ -2408,10 +2588,6 @@
           </article>
         </div>
 
-        <div class="status-row">
-          <div class="status-item"><span class="status-tag delivered">Delivered</span> Customized CRM &mdash; built for <strong>MediLink360 FZ-LLC</strong></div>
-          <div class="status-item"><span class="status-tag running">Running</span> Paid ad campaigns &mdash; managed for <strong>MediLink360 FZ-LLC</strong></div>
-        </div>
 
       </div>
     </section>
@@ -2546,28 +2722,48 @@
         <h2>A new studio, built to give every early client full attention</h2>
         <p class="approach-body">KEB International Group is a new studio &mdash; our first build, a customized CRM for MediLink360 FZ-LLC, is live today. We're growing our track record with each partner who joins us next. In practice, that means direct access to the people doing the work &mdash; not a layer of account managers &mdash; and a company motivated to prove itself on results, not on a slide of past clients.</p>
 
-        <div class="diff-list">
-          <div class="diff-item">
-            <span class="num">01</span>
-            <div>
-              <h3><svg class="icon" aria-hidden="true"><use href="#icon-users"/></svg>Direct access</h3>
-              <p>You work with the people building your CRM and running your campaigns &mdash; no intermediaries relaying your feedback.</p>
+        <div class="cred">
+          <div class="cred-live">
+            <div class="cred-live-head">
+              <span class="cred-label">Live engagement</span>
+              <span class="cred-client">MediLink360 FZ-LLC</span>
             </div>
-          </div>
-          <div class="diff-item">
-            <span class="num">02</span>
-            <div>
-              <h3><svg class="icon" aria-hidden="true"><use href="#icon-layers"/></svg>One team, two disciplines</h3>
-              <p>Your software and your marketing are built by people who talk to each other daily, instead of two vendors you have to coordinate yourself.</p>
+            <div class="cred-lines">
+              <div class="cred-line">
+                <span class="status-tag delivered">Delivered</span>
+                <span>Customized CRM &mdash; built and shipped</span>
+              </div>
+              <div class="cred-line">
+                <span class="status-tag running">Running</span>
+                <span>Paid ad campaigns &mdash; managed month to month</span>
+              </div>
             </div>
+            <p class="cred-note">Both sides of the business, for the same client, from the same team.</p>
           </div>
-          <div class="diff-item">
-            <span class="num">03</span>
-            <div>
-              <h3><svg class="icon" aria-hidden="true"><use href="#icon-tag"/></svg>Fixed price to build, subscription to run</h3>
-              <p>Every project starts at a fixed price agreed before work begins &mdash; no hourly surprises. Once it's live, ongoing maintenance and management runs on a simple subscription, so you always know what next month costs.</p>
-            </div>
-          </div>
+
+          <ul class="cred-commit">
+            <li>
+              <span class="cred-check"><svg class="icon" aria-hidden="true"><use href="#icon-users"/></svg></span>
+              <div>
+                <h3>Direct access</h3>
+                <p>You work with the people building your CRM and running your campaigns &mdash; no intermediaries relaying your feedback.</p>
+              </div>
+            </li>
+            <li>
+              <span class="cred-check"><svg class="icon" aria-hidden="true"><use href="#icon-layers"/></svg></span>
+              <div>
+                <h3>One team, two disciplines</h3>
+                <p>Your software and your marketing are built by people who talk to each other daily, instead of two vendors you have to coordinate yourself.</p>
+              </div>
+            </li>
+            <li>
+              <span class="cred-check"><svg class="icon" aria-hidden="true"><use href="#icon-tag"/></svg></span>
+              <div>
+                <h3>Fixed price to build, subscription to run</h3>
+                <p>Every project starts at a fixed price agreed before work begins &mdash; no hourly surprises. Once it's live, ongoing maintenance and management runs on a simple subscription, so you always know what next month costs.</p>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
     </section>
@@ -2966,12 +3162,15 @@
 
   /* ---------- ecosystem diagram ---------- */
   var eco = document.getElementById("eco");
+  var setEcoCaption = null;
   if (eco){
     var ecoBtns = Array.prototype.slice.call(eco.querySelectorAll(".eco-btn"));
     var ecoCaption = eco.querySelector("[data-eco-caption]");
-    var ecoCopy = {
-      patchwork: "Separate vendors, separate tools. Nothing talks to anything else, and keeping them in sync is your job.",
-      ecosystem: "One team, one system. The software your team works in and the campaigns that fill it are built to talk to each other."
+
+    setEcoCaption = function(){
+      if (!ecoCaption) return;
+      ecoCaption.textContent = eco.dataset.state === "ecosystem"
+        ? t("ecoEcosystem") : t("ecoPatchwork");
     };
 
     function setEco(state){
@@ -2981,7 +3180,7 @@
         b.classList.toggle("active", on);
         b.setAttribute("aria-pressed", on ? "true" : "false");
       });
-      if (ecoCaption) ecoCaption.textContent = ecoCopy[state];
+      setEcoCaption();
     }
 
     ecoBtns.forEach(function(b){
@@ -3185,7 +3384,7 @@
       return;
     }
     submitBtn.disabled = true;
-    submitBtn.textContent = "Sending…";
+    submitBtn.textContent = t("sending");
     status.textContent = "";
     status.className = "form-status";
 
@@ -3195,20 +3394,260 @@
       headers: { "Accept": "application/json" }
     }).then(function(res){
       if (res.ok){
-        status.textContent = "Thanks — we'll be in touch shortly.";
+        status.textContent = t("ok");
         status.className = "form-status ok";
         form.reset();
       } else {
         throw new Error("Submit failed");
       }
     }).catch(function(){
-      status.textContent = "Something went wrong. Email us directly at admin@kebinternational.com.";
+      status.textContent = t("err");
       status.className = "form-status err";
     }).finally(function(){
       submitBtn.disabled = false;
-      submitBtn.textContent = "Send →";
+      submitBtn.textContent = t("send");
     });
   });
+
+  /* ---------- bilingual EN / AR ----------
+     Arabic copy is a first draft and should be reviewed by a native speaker
+     before launch. The product demo inside the hero stays in English on
+     purpose: it is a screenshot of software, and mixed-language product UI
+     is normal. */
+  var AR_TEXT = [
+    ['.tagline', 'بناة المنظومات المتكاملة — برمجيات وتسويق رقمي · القاهرة'],
+    ['.nav-cta', 'ابدأ مشروعك'],
+    ['.sticky-cta-text', 'أنظمة وحملات'],
+    ['.sticky-cta .btn', 'ابدأ مشروعك'],
+
+    ['#overview .eyebrow', 'مجموعة KEB الدولية — القاهرة، مصر'],
+    ['.hero p.lede', 'تُصمّم KEB أنظمة CRM مخصّصة وتُدير التسويق الرقمي تحت سقف واحد — بحيث تُبنى الأدوات التي يعمل بها فريقك كل يوم والحملات التي تملأ خط مبيعاتك على يد الفريق نفسه، وباتجاه الهدف نفسه.'],
+    ['.cta-row .btn-primary', 'ابدأ مشروعك'],
+    ['.hero-float-a', 'نظام CRM مخصّص'],
+    ['.hero-float-b', 'إعلانات مدفوعة'],
+    ['.preview-note', 'عرض تفاعلي — اضغط على القائمة الجانبية لتبديل الشاشات. بيانات توضيحية، وليست لوحة عميل حقيقية.'],
+
+    ['#vision .eyebrow', 'الرؤية والرسالة'],
+    ['#vision h2', 'لماذا وُجدت KEB'],
+    ['.eco-btn[data-state-set="patchwork"]', 'معظم الشركات'],
+    ['.eco-btn[data-state-set="ecosystem"]', 'مع KEB'],
+    ['.vm-card.vision .label', 'الرؤية'],
+    ['.vm-card.mission .label', 'الرسالة'],
+    ['.vm-card.vision blockquote', 'منطقة تعمل فيها الشركات النامية على منظومة واحدة مترابطة — برمجيات مُصمّمة على طريقة عملها الفعلية، وتسويق مبني حول من تخدمهم فعلًا — بدلًا من خليط من الأدوات والموردين غير المترابطين.'],
+    ['.vm-card.mission blockquote', 'نبني أنظمة CRM التي تُدير الأعمال والحملات التي تُنمّيها كممارسة واحدة مترابطة، ليحصل كل عميل على منظومة مُصمّمة للعمل معًا من اليوم الأول — لا مورّدَين مُلحقَين ببعضهما لاحقًا.'],
+
+    ['#services .eyebrow', 'ما الذي نبنيه'],
+    ['#services h2', 'تخصّصان، وفريق واحد'],
+    ['.svc-intro', 'معظم الشركات تستعين بمطوّر لأنظمتها ووكالة منفصلة لتسويقها، ثم تقضي وقتها في التنسيق بينهما. KEB تقوم بالأمرين، فلا يحدث هذا التباعد من الأساس.'],
+
+    ['#studio .eyebrow', 'الهوية والإبداع'],
+    ['#studio h2', 'النصف الآخر مما نُقدّمه'],
+    ['#studio .svc-intro', 'الأنظمة نصف المهمة فقط. هذا هو عمل الهوية والمحتوى الذي يسير بجانبها — اتجاهات توضيحية، وليست أعمال عملاء حقيقية.'],
+    ['.ba-head h3', 'العرض نفسه، بصياغة جديدة'],
+    ['.ba-hint', 'اسحب للمقارنة'],
+    ['.flag-before', 'قبل'],
+    ['.flag-after', 'بعد'],
+    ['.showcase-caption', 'اتجاهات هوية وأعمال إبداعية توضيحية — أعمال نموذجية، وليست أعمال عملاء حقيقية.'],
+
+    ['#approach .eyebrow', 'لماذا KEB'],
+    ['#approach h2', 'استوديو جديد، مبني ليمنح كل عميل مبكر اهتمامًا كاملًا'],
+    ['.approach-body', 'مجموعة KEB الدولية استوديو جديد — أول ما بنيناه، نظام CRM مخصّص لشركة MediLink360 FZ-LLC، يعمل اليوم. ونحن نبني سجلّنا مع كل شريك ينضم إلينا. عمليًا، هذا يعني وصولًا مباشرًا لمن ينفّذون العمل — لا طبقة من مديري الحسابات — وشركة مدفوعة لإثبات نفسها بالنتائج، لا بقائمة عملاء سابقين.'],
+    ['.cred-label', 'تعاون قائم'],
+    ['.cred-note', 'جانبا العمل، لنفس العميل، ومن نفس الفريق.'],
+
+    ['#process .eyebrow', 'كيف يسير التعاون'],
+    ['#process h2', 'من أول مكالمة إلى نمو مستمر'],
+    ['.tl-key-item.sw', 'مسار البرمجيات'],
+    ['.tl-key-item.mk', 'مسار التسويق'],
+
+    ['#contact .eyebrow', 'تواصل معنا'],
+    ['#contact h2', 'أخبرنا بما تريد إصلاحه أو تنميته'],
+    ['label[for="f-name"]', 'الاسم'],
+    ['label[for="f-email"]', 'البريد الإلكتروني'],
+    ['label[for="f-company"]', 'الشركة'],
+    ['label[for="f-need"]', 'ما الذي تحتاجه؟'],
+    ['label[for="f-message"]', 'ما الذي تريد إصلاحه أو تنميته؟'],
+    ['#submitBtn', 'إرسال'],
+    ['.footer-brand .tagline', 'بناة المنظومات المتكاملة — برمجيات وتسويق رقمي · القاهرة'],
+    ['.footer-cta', 'ابدأ مشروعك'],
+    ['.footer-row span:first-child', '© 2026 مجموعة KEB الدولية'],
+    ['.footer-row span:last-child', 'kebinternational.com · القاهرة، مصر']
+  ];
+
+  /* selector -> list of replacements, applied in document order */
+  var AR_LISTS = [
+    ['.nav-list a', [
+      '<span class="n">00</span>نظرة عامة',
+      '<span class="n">01</span>الرؤية والرسالة',
+      '<span class="n">02</span>الخدمات',
+      '<span class="n">03</span>الهوية والإبداع',
+      '<span class="n">04</span>منهجنا',
+      '<span class="n">05</span>مراحل العمل',
+      '<span class="n">06</span>تواصل معنا'
+    ], 'html'],
+    ['.eco-node text', ['CRM', 'الموقع', 'التطبيق', 'الحملات', 'الهوية', 'المحتوى'], 'text'],
+    ['.svc-f', [
+      'الكل <span class="svc-f-n">8</span>',
+      '<span class="tl-dot"></span>الأنظمة <span class="svc-f-n">3</span>',
+      '<span class="tl-dot"></span>النمو <span class="svc-f-n">5</span>'
+    ], 'html'],
+    ['.svc-disc', ['الأنظمة','الأنظمة','الأنظمة','النمو','النمو','النمو','النمو','النمو'], 'text'],
+    ['.svc-tile h3', [
+      'نظام CRM مخصّص','تطوير المواقع','تنفيذ تطبيقات الجوال','إدارة وسائل التواصل',
+      'تحسين محركات البحث','الإعلانات المدفوعة','الهوية البصرية','فيديوهات بالذكاء الاصطناعي'
+    ], 'text'],
+    ['.svc-tile > p', [
+      'نظام مبني على طريقة فريقك الفعلية في البيع والدعم — لا قالب جاهز تضطر لتطويع عملك حوله.',
+      'مواقع تسويقية وتطبيقات ويب مُصمّمة حول هويتك ومبنية لتحويل الزوّار إلى عملاء محتملين.',
+      'تطبيقات iOS وAndroid تُبنى وتُطلق، من التوصيف حتى النشر على المتاجر.',
+      'جدول نشر منتظم ونبرة موحّدة عبر القنوات التي يستخدمها جمهورك.',
+      'إصلاحات تقنية وبنية محتوى تستهدف الظهور فيما يبحث عنه عملاؤك فعلًا.',
+      'حملات على المنصات التي يتواجد عليها المشترون بالفعل، بميزانيات مرتبطة بالنتائج.',
+      'هوية ونبرة ونظام بصري يمتد عبر موقعك ومنتجك وحملاتك.',
+      'محتوى فيديو مُنتج بالذكاء الاصطناعي للإعلانات والسوشيال وعروض المنتج، بتسليم سريع.'
+    ], 'text'],
+    ['.kit-label', ['لوحة الألوان','الخطوط','تمتد إلى'], 'text'],
+    ['.kit-chip', ['الشعار','الموقع','السوشيال','الإعلانات','العرض'], 'text'],
+    ['.cred-line span:not(.status-tag)', [
+      'نظام CRM مخصّص — تم بناؤه وتسليمه',
+      'حملات إعلانية مدفوعة — تُدار شهريًا'
+    ], 'text'],
+    ['.status-tag', ['تم التسليم','قيد التشغيل'], 'text'],
+    ['.cred-commit h3', ['وصول مباشر','فريق واحد بتخصّصين','سعر ثابت للبناء، واشتراك للتشغيل'], 'text'],
+    ['.cred-commit p', [
+      'تتعامل مباشرة مع من يبنون نظامك ويديرون حملاتك — بلا وسطاء ينقلون ملاحظاتك.',
+      'برمجياتك وتسويقك يبنيهما أشخاص يتحدثون يوميًا، بدل مورّدَين تضطر للتنسيق بينهما بنفسك.',
+      'كل مشروع يبدأ بسعر ثابت يُتفق عليه قبل بدء العمل — بلا مفاجآت بالساعة. وبعد الإطلاق، تسير الصيانة والإدارة على اشتراك بسيط، فتعرف دائمًا تكلفة الشهر القادم.'
+    ], 'text'],
+    ['.tl-stage .stage', ['المرحلة 01','المرحلة 02','المرحلة 03','المرحلة 04'], 'text'],
+    ['.tl-stage h3', ['الاستكشاف','البناء','الإطلاق','النمو'], 'text'],
+    ['.tl-stage > p', [
+      'نراجع ما لديك — أنظمة وموقع وتطبيق وقنوات — مقابل أهدافك وعملائك المستهدفين.',
+      'تُبنى برمجياتك — CRM أو موقع أو تطبيق — بينما تُجهّز الحملات والهوية والأعمال الإبداعية بالتوازي.',
+      'تنطلق البرمجيات، وتبدأ الحملات، ويُدرَّب فريقك على الجديد.',
+      'يتطوّر الجانبان بناءً على بيانات حقيقية — استخدام المنتج وأرقام المبيعات من جهة، وأداء الحملات والمحتوى من جهة أخرى.'
+    ], 'text'],
+    ['.tl-track', [
+      'الأنظمة والموقع والتطبيق','القنوات والجمهور والتموضع',
+      'CRM أو موقع أو تطبيق','الحملات والهوية والإبداع',
+      'الإطلاق وتدريب الفريق','انطلاق الحملات',
+      'الاستخدام وأرقام المبيعات','أداء الحملات والمحتوى'
+    ], 'dot'],
+    ['.contact-card .label', ['البريد الإلكتروني','الهاتف','المكتب'], 'text'],
+    ['.contact-card address', ['عمارة 11، شقة 14، شارع 233<br>دجلة المعادي، القاهرة، مصر'], 'html'],
+    ['#f-need option', ['نظام CRM','موقع إلكتروني','تطبيق جوال','تسويق وإبداع','لست متأكدًا بعد'], 'text'],
+    ['.footer-heading', ['الأنظمة','النمو','تواصل'], 'text'],
+    ['.footer-col a:not([href^="mailto"]):not([href^="tel"])', [
+      'نظام CRM مخصّص','تطوير المواقع','تنفيذ تطبيقات الجوال',
+      'إدارة وسائل التواصل','تحسين محركات البحث','الإعلانات المدفوعة','الهوية البصرية','فيديوهات بالذكاء الاصطناعي'
+    ], 'text'],
+    ['.ticker-track span', [
+      'مواقع إلكترونية','تطبيقات جوال','هوية بصرية','إعلانات مدفوعة','سوشيال ميديا','تحسين محركات البحث','فيديوهات AI','أنظمة CRM',
+      'مواقع إلكترونية','تطبيقات جوال','هوية بصرية','إعلانات مدفوعة','سوشيال ميديا','تحسين محركات البحث','فيديوهات AI','أنظمة CRM'
+    ], 'text']
+  ];
+
+  var LANG = 'en';
+  var EN_CACHE = null;
+
+  /* hero headline and the pipeline chip carry inline markup, so they are set as HTML */
+  var AR_HTML = [
+    ['.hero h1', 'أنظمة تُدير أعمالك. <em>وحملات</em> تُنمّيها.'],
+    ['#pipelineChip', '<span class="lbl">سجل:</span><span class="stage" data-stage="0">عميل محتمل</span><span class="arrow">&larr;</span><span class="stage" data-stage="1">جهة اتصال</span><span class="arrow">&larr;</span><span class="stage" data-stage="2">صفقة</span><span class="arrow">&larr;</span><span class="stage" data-stage="3">عميل</span>'],
+    ['.cta-row .btn-secondary', '<span class="btn-play"><svg class="icon" aria-hidden="true"><use href="#icon-video"/></svg></span>شاهد ما نبنيه'],
+    ['.svc-flow', '<span>عميل محتمل</span><span class="svc-flow-a">&larr;</span><span>جهة اتصال</span><span class="svc-flow-a">&larr;</span><span>صفقة</span><span class="svc-flow-a">&larr;</span><span class="svc-flow-end">عميل</span>']
+  ];
+
+  var JS_STRINGS = {
+    en: {
+      ecoPatchwork: "Separate vendors, separate tools. Nothing talks to anything else, and keeping them in sync is your job.",
+      ecoEcosystem: "One team, one system. The software your team works in and the campaigns that fill it are built to talk to each other.",
+      sending: "Sending…",
+      send: "Send →",
+      ok: "Thanks — we'll be in touch shortly.",
+      err: "Something went wrong. Email us directly at admin@kebinternational.com."
+    },
+    ar: {
+      ecoPatchwork: "موردون منفصلون وأدوات منفصلة. لا شيء يتحدث مع الآخر، ومهمة التنسيق بينها تقع عليك.",
+      ecoEcosystem: "فريق واحد ونظام واحد. البرمجيات التي يعمل بها فريقك والحملات التي تُغذّيها مبنية لتتحدث معًا.",
+      sending: "جارٍ الإرسال…",
+      send: "إرسال",
+      ok: "شكرًا لك — سنتواصل معك قريبًا.",
+      err: "حدث خطأ ما. راسلنا مباشرة على admin@kebinternational.com."
+    }
+  };
+  function t(key){ return JS_STRINGS[LANG][key]; }
+
+  function cacheEnglish(){
+    EN_CACHE = { text: [], html: [], lists: [] };
+    AR_TEXT.forEach(function(row){
+      var el = document.querySelector(row[0]);
+      EN_CACHE.text.push(el ? el.textContent : null);
+    });
+    AR_HTML.forEach(function(row){
+      var el = document.querySelector(row[0]);
+      EN_CACHE.html.push(el ? el.innerHTML : null);
+    });
+    AR_LISTS.forEach(function(row){
+      var els = document.querySelectorAll(row[0]);
+      EN_CACHE.lists.push([].map.call(els, function(el){
+        return row[2] === 'html' ? el.innerHTML : el.textContent;
+      }));
+    });
+  }
+
+  function applyLang(lang){
+    LANG = lang;
+    var ar = lang === 'ar';
+    document.documentElement.lang = ar ? 'ar' : 'en';
+    document.documentElement.dir = ar ? 'rtl' : 'ltr';
+
+    AR_TEXT.forEach(function(row, i){
+      var el = document.querySelector(row[0]);
+      if (el) el.textContent = ar ? row[1] : EN_CACHE.text[i];
+    });
+    AR_HTML.forEach(function(row, i){
+      var el = document.querySelector(row[0]);
+      if (el) el.innerHTML = ar ? row[1] : EN_CACHE.html[i];
+    });
+    AR_LISTS.forEach(function(row, i){
+      var els = document.querySelectorAll(row[0]);
+      [].forEach.call(els, function(el, j){
+        var val = ar ? row[1][j] : EN_CACHE.lists[i][j];
+        if (val === undefined) return;
+        if (row[2] === 'html') el.innerHTML = val;
+        else if (row[2] === 'dot'){
+          // keep the leading colour dot, swap only the label after it
+          var dot = el.querySelector('.tl-dot');
+          el.textContent = val;
+          if (dot) el.insertBefore(dot, el.firstChild);
+        } else {
+          el.textContent = val;
+        }
+      });
+    });
+
+    // strings owned by JS
+    if (typeof setEcoCaption === 'function') setEcoCaption();
+    if (submitBtn && !submitBtn.disabled) submitBtn.textContent = t('send');
+
+    document.querySelectorAll('.lang-btn').forEach(function(b){
+      var on = b.dataset.lang === lang;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    try { localStorage.setItem('keb-lang', lang); } catch(e){}
+  }
+
+  cacheEnglish();
+  document.querySelectorAll('.lang-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){ applyLang(btn.dataset.lang); });
+  });
+  // Honour a stored choice only - never auto-switch from browser locale.
+  var storedLang = null;
+  try { storedLang = localStorage.getItem('keb-lang'); } catch(e){}
+  if (storedLang === 'ar') applyLang('ar');
+
 })();
 </script>
 </body>
