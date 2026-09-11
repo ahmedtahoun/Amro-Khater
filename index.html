@@ -59,7 +59,7 @@
     --ground-3:#171e27;
     --ink:#f2f0e8;
     --ink-dim:#93a2ac;
-    --ink-faint:#5f6c76;
+    --ink-faint:#7d8993;
     --line:#20272f;
     --teal:#2fd6bd;
     --teal-ink:#07120f;
@@ -687,7 +687,7 @@
     margin-bottom:14px;
     flex-wrap:wrap;
   }
-  .app-widget-head h4{
+  .app-widget-head .app-widget-title{
     margin:0;
     font-family:var(--font-display);
     font-weight:700;
@@ -934,13 +934,15 @@
     align-items:center;
     gap:10px;
   }
-  .svc-tile h4{
+  .svc-tile h3{
     margin:0;
+    font-family:var(--font-body);
     font-size:.98rem;
     font-weight:600;
+    letter-spacing:0;
     color:var(--teal);
   }
-  .svc-tile[data-disc="mk"] h4{color:var(--amber);}
+  .svc-tile[data-disc="mk"] h3{color:var(--amber);}
   .svc-item-head .icon{color:var(--teal);}
   .svc-tile[data-disc="mk"] .svc-item-head .icon{color:var(--amber);}
   .svc-tile p{margin:0; font-size:.9rem;}
@@ -1268,7 +1270,8 @@
     transition:background .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease);
   }
   .kit-tab:hover{color:var(--ink); border-color:var(--ink-faint);}
-  .kit-tab.active{background:var(--k1); border-color:var(--k1); color:var(--k4);}
+  /* brand colour on dark: cream on a mid-tone brand fill fails contrast at this size */
+  .kit-tab.active{background:var(--ground); border-color:var(--k1); color:var(--k1); font-weight:600;}
 
   .kit-body{display:grid; grid-template-columns:1fr; gap:0;}
   @media (min-width:760px){
@@ -1369,7 +1372,7 @@
     margin-bottom:12px;
     flex-wrap:wrap;
   }
-  .ba-head h4{
+  .ba-head h3{
     margin:0;
     font-family:var(--font-display);
     font-weight:700;
@@ -1585,7 +1588,6 @@
     color:var(--teal-ink);
   }
   /* rail: vertical on mobile, horizontal from 820px */
-  .tl-rail,
   .tl-stage::before,
   .tl-stage::after{
     content:"";
@@ -2087,7 +2089,7 @@
                 <div class="app-widget-row">
                   <div class="app-widget">
                     <div class="app-widget-head">
-                      <h4>Pipeline growth</h4>
+                      <p class="app-widget-title">Pipeline growth</p>
                       <div class="chart-legend">
                         <span class="legend-item"><span class="swatch"></span>This month</span>
                         <span class="legend-item"><span class="swatch dashed"></span>Last month</span>
@@ -2105,7 +2107,7 @@
                   </div>
 
                   <div class="app-widget">
-                    <div class="app-widget-head"><h4>Pipeline mix</h4></div>
+                    <div class="app-widget-head"><p class="app-widget-title">Pipeline mix</p></div>
                     <div class="donut-wrap">
                       <svg class="donut" viewBox="0 0 120 120">
                         <circle class="ring-bg" cx="60" cy="60" r="48"/>
@@ -2201,7 +2203,7 @@
 
                 <div class="app-widget-row">
                   <div class="app-widget">
-                    <div class="app-widget-head"><h4>Leads per week</h4></div>
+                    <div class="app-widget-head"><p class="app-widget-title">Leads per week</p></div>
                     <svg class="mini-line-chart" viewBox="0 0 320 100" role="img" aria-label="Leads per week rising from 9 to 34 over eight weeks">
                       <line class="grid-line" x1="0" y1="95" x2="320" y2="95"/>
                       <path d="M10,90 L52.9,81.6 L95.7,84.4 L138.6,70.4 L181.4,62 L224.3,53.6 L267.1,39.6 L310,20 L310,95 L10,95 Z" fill="var(--amber)" fill-opacity=".12"/>
@@ -2214,7 +2216,7 @@
                   </div>
 
                   <div class="app-widget">
-                    <div class="app-widget-head"><h4>By channel</h4></div>
+                    <div class="app-widget-head"><p class="app-widget-title">By channel</p></div>
                     <div class="funnel-chart" role="img" aria-label="Leads by channel: Meta ads 42 percent, Google ads 31 percent, Instagram 18 percent, TikTok 9 percent">
                       <div class="funnel-row">
                         <span class="funnel-label">Meta ads</span>
@@ -2347,42 +2349,42 @@
         <div class="svc-unified" data-filter-state="all">
           <article class="svc-tile featured" data-disc="sw">
             <span class="svc-disc sw">Systems</span>
-            <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-crm"/></svg><h4>Custom CRM software</h4></div>
+            <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-crm"/></svg><h3>Custom CRM software</h3></div>
             <p>A system modeled on how your team actually sells and supports &mdash; not a generic template you have to bend your process around.</p>
           </article>
           <article class="svc-tile" data-disc="sw">
             <span class="svc-disc sw">Systems</span>
-            <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-website"/></svg><h4>Website development</h4></div>
+            <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-website"/></svg><h3>Website development</h3></div>
             <p>Marketing sites and web apps designed around your brand and built to convert visitors into leads.</p>
           </article>
           <article class="svc-tile" data-disc="sw">
             <span class="svc-disc sw">Systems</span>
-            <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-mobile"/></svg><h4>Mobile app implementation</h4></div>
+            <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-mobile"/></svg><h3>Mobile app implementation</h3></div>
             <p>iOS and Android apps built and shipped, from spec through app-store release.</p>
           </article>
           <article class="svc-tile" data-disc="mk">
             <span class="svc-disc mk">Growth</span>
-            <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-social"/></svg><h4>Social Media Management</h4></div>
+            <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-social"/></svg><h3>Social Media Management</h3></div>
             <p>A consistent posting calendar and voice across the channels your audience uses.</p>
           </article>
           <article class="svc-tile" data-disc="mk">
             <span class="svc-disc mk">Growth</span>
-            <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-seo"/></svg><h4>SEO</h4></div>
+            <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-seo"/></svg><h3>SEO</h3></div>
             <p>Technical fixes and content structure aimed at ranking for what your customers actually search.</p>
           </article>
           <article class="svc-tile" data-disc="mk">
             <span class="svc-disc mk">Growth</span>
-            <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-ads"/></svg><h4>Paid ads</h4></div>
+            <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-ads"/></svg><h3>Paid ads</h3></div>
             <p>Campaigns on the platforms where your buyers already are, with budgets tracked to results.</p>
           </article>
           <article class="svc-tile" data-disc="mk">
             <span class="svc-disc mk">Growth</span>
-            <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-branding"/></svg><h4>Branding</h4></div>
+            <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-branding"/></svg><h3>Branding</h3></div>
             <p>Identity, voice, and visual system that carries across your site, product, and campaigns.</p>
           </article>
           <article class="svc-tile" data-disc="mk">
             <span class="svc-disc mk">Growth</span>
-            <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-video"/></svg><h4>AI videos</h4></div>
+            <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-video"/></svg><h3>AI videos</h3></div>
             <p>AI-produced video content for ads, social, and product demos, turned around fast.</p>
           </article>
         </div>
@@ -2442,7 +2444,7 @@
 
           <div class="ba-wrap">
             <div class="ba-head">
-              <h4>Same offer, rebuilt</h4>
+              <h3>Same offer, rebuilt</h3>
               <span class="ba-hint">Drag to compare</span>
             </div>
             <div class="ba" style="--pos:52%">
