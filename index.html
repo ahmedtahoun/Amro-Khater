@@ -760,13 +760,46 @@
   @media (min-width:820px){
     .showcase-grid{grid-template-columns:1fr 1fr;}
   }
-  @media (min-width:1090px){
-    .showcase-grid{grid-template-columns:1.15fr 1.15fr .85fr;}
-  }
   .showcase-phone{display:flex; justify-content:center;}
-  @media (max-width:1089.98px){
-    .showcase-phone{grid-column:1/-1;}
+
+  .content-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:8px;
   }
+  .content-card{
+    position:relative;
+    aspect-ratio:1;
+    border-radius:10px;
+    overflow:hidden;
+    display:flex;
+    align-items:flex-end;
+  }
+  .content-card .type{
+    display:flex;
+    align-items:center;
+    gap:4px;
+    padding:6px;
+    font-family:var(--font-mono);
+    font-size:.58rem;
+    color:rgba(241,238,232,.92);
+    text-shadow:0 1px 4px rgba(0,0,0,.5);
+  }
+  .content-card .type .icon{width:11px; height:11px; color:inherit;}
+  .content-card .badge{
+    position:absolute;
+    top:5px;
+    right:5px;
+    font-family:var(--font-mono);
+    font-size:.54rem;
+    padding:2px 6px;
+    border-radius:4px;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+  }
+  .content-card .badge.scheduled{background:rgba(11,17,22,.55); color:var(--amber);}
+  .content-card .badge.live{background:var(--teal); color:var(--teal-ink);}
+  .content-caption{margin-top:14px; font-size:.86rem;}
 
   .app-frame{
     background:var(--ground-2);
@@ -1624,6 +1657,51 @@
                     <span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span><span>W6</span><span>W7</span><span>W8</span>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            <div class="app-frame" data-reveal>
+              <div class="app-frame-bar">
+                <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+                <span class="app-frame-url">app.kebinternational.com/content</span>
+              </div>
+              <div class="app-frame-body">
+                <p class="panel-title">Content calendar</p>
+                <div class="content-grid" role="img" aria-label="Content calendar grid showing eight scheduled or live posts across reels, posts, carousels, and ads">
+                  <div class="content-card" style="background:linear-gradient(135deg,#2fd6bd,#0b3830)">
+                    <span class="badge live">Live</span>
+                    <span class="type"><svg class="icon" aria-hidden="true"><use href="#icon-video"/></svg>Reel</span>
+                  </div>
+                  <div class="content-card" style="background:linear-gradient(135deg,#e8a24a,#3a2810)">
+                    <span class="badge scheduled">Scheduled</span>
+                    <span class="type"><svg class="icon" aria-hidden="true"><use href="#icon-social"/></svg>Post</span>
+                  </div>
+                  <div class="content-card" style="background:linear-gradient(135deg,#2fd6bd,#e8a24a)">
+                    <span class="badge scheduled">Scheduled</span>
+                    <span class="type"><svg class="icon" aria-hidden="true"><use href="#icon-branding"/></svg>Carousel</span>
+                  </div>
+                  <div class="content-card" style="background:linear-gradient(135deg,#163c37,#0a1e1b)">
+                    <span class="badge live">Live</span>
+                    <span class="type"><svg class="icon" aria-hidden="true"><use href="#icon-ads"/></svg>Ad</span>
+                  </div>
+                  <div class="content-card" style="background:linear-gradient(135deg,#4a3419,#1c130a)">
+                    <span class="badge scheduled">Scheduled</span>
+                    <span class="type"><svg class="icon" aria-hidden="true"><use href="#icon-video"/></svg>Reel</span>
+                  </div>
+                  <div class="content-card" style="background:linear-gradient(135deg,#e8a24a,#2fd6bd)">
+                    <span class="badge live">Live</span>
+                    <span class="type"><svg class="icon" aria-hidden="true"><use href="#icon-social"/></svg>Post</span>
+                  </div>
+                  <div class="content-card" style="background:linear-gradient(135deg,#1c554c,#08120f)">
+                    <span class="badge scheduled">Scheduled</span>
+                    <span class="type"><svg class="icon" aria-hidden="true"><use href="#icon-branding"/></svg>Carousel</span>
+                  </div>
+                  <div class="content-card" style="background:linear-gradient(135deg,#8a5a22,#1c130a)">
+                    <span class="badge scheduled">Scheduled</span>
+                    <span class="type"><svg class="icon" aria-hidden="true"><use href="#icon-ads"/></svg>Ad</span>
+                  </div>
+                </div>
+                <p class="content-caption">8 pieces in production this week across social, ads, and video.</p>
               </div>
             </div>
 
