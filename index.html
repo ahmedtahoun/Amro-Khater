@@ -739,7 +739,7 @@
     display:block;
     width:100%;
     height:auto;
-    max-width:620px;
+    max-width:100%;
     background:var(--ground-2);
     border:1px solid var(--line);
     border-radius:16px;
@@ -946,6 +946,19 @@
   .svc-item-head .icon{color:var(--teal);}
   .svc-tile[data-disc="mk"] .svc-item-head .icon{color:var(--amber);}
   .svc-tile p{margin:0; font-size:.9rem;}
+  .svc-flow{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:auto;
+    padding-top:14px;
+    font-family:var(--font-mono);
+    font-size:.72rem;
+    color:var(--ink-faint);
+  }
+  .svc-flow-a{opacity:.6;}
+  .svc-flow-end{color:var(--teal);}
 
   .status-row{
     display:flex;
@@ -2281,7 +2294,7 @@
             <button type="button" class="eco-btn" data-state-set="ecosystem" aria-pressed="false">On KEB</button>
           </div>
 
-          <svg class="eco-svg" viewBox="0 0 560 320" role="img" aria-label="Diagram: six disconnected tools and vendors rearranging into one connected ecosystem around KEB">
+          <svg class="eco-svg" viewBox="0 26 560 268" role="img" aria-label="Diagram: six disconnected tools and vendors rearranging into one connected ecosystem around KEB">
             <g class="eco-links">
               <line x1="280" y1="160" x2="120" y2="66"/>
               <line x1="280" y1="160" x2="96" y2="160"/>
@@ -2351,6 +2364,12 @@
             <span class="svc-disc sw">Systems</span>
             <div class="svc-item-head"><svg class="icon" aria-hidden="true"><use href="#icon-crm"/></svg><h3>Custom CRM software</h3></div>
             <p>A system modeled on how your team actually sells and supports &mdash; not a generic template you have to bend your process around.</p>
+            <div class="svc-flow" aria-hidden="true">
+              <span>lead</span><span class="svc-flow-a">&rarr;</span>
+              <span>contact</span><span class="svc-flow-a">&rarr;</span>
+              <span>deal</span><span class="svc-flow-a">&rarr;</span>
+              <span class="svc-flow-end">client</span>
+            </div>
           </article>
           <article class="svc-tile" data-disc="sw">
             <span class="svc-disc sw">Systems</span>
