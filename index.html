@@ -1861,6 +1861,65 @@
     padding:7px 10px;
   }
 
+  /* ---------- FAQ (native details: keyboard + no-JS by default) ---------- */
+  .faq{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    margin-top:32px;
+  }
+  .faq-item{
+    background:var(--ground-2);
+    border:1px solid var(--line);
+    border-radius:var(--r-lg);
+    overflow:hidden;
+    transition:background .25s var(--ease), border-color .25s var(--ease);
+  }
+  .faq-item:hover{border-color:var(--ink-faint);}
+  .faq-item[open]{background:var(--ground-2-hi); border-color:var(--ink-faint);}
+  .faq-item summary{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+    padding:20px 24px;
+    cursor:pointer;
+    list-style:none;
+  }
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary::marker{content:"";}
+  .faq-item summary:focus-visible{outline:2px solid var(--teal); outline-offset:-3px; border-radius:var(--r-lg);}
+  .faq-q{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:1.02rem;
+    color:var(--ink);
+    line-height:1.4;
+  }
+  .faq-icon{
+    flex-shrink:0;
+    width:30px; height:30px;
+    border-radius:var(--r-pill);
+    background:var(--ground);
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--teal);
+    transition:transform .25s var(--ease), background .25s var(--ease);
+  }
+  .faq-icon .icon{width:15px; height:15px;}
+  .faq-item[open] .faq-icon{transform:rotate(180deg); background:var(--teal-dim);}
+  .faq-a{
+    margin:0;
+    padding:0 24px 22px;
+    font-size:.94rem;
+    max-width:74ch;
+  }
+  @media (max-width:600px){
+    .faq-item summary{padding:17px 18px; gap:12px;}
+    .faq-q{font-size:.95rem;}
+    .faq-a{padding:0 18px 18px;}
+  }
+
   /* ---------- contact ---------- */
   .contact-grid{
     display:grid;
@@ -2040,7 +2099,7 @@
     border-bottom:1px solid var(--line);
   }
   @media (min-width:760px){
-    .footer-main{grid-template-columns:1.6fr 1fr 1fr 1.2fr; gap:28px;}
+    .footer-main{grid-template-columns:1.5fr 1fr 1fr .8fr 1.2fr; gap:26px;}
   }
   .footer-brand .wordmark{font-size:1.1rem; white-space:normal; display:block; margin-bottom:8px;}
   .footer-brand .tagline{margin:0 0 18px; max-width:34ch;}
@@ -2182,6 +2241,9 @@
       <line x1="4" y1="12" x2="20" y2="12"/><circle cx="15" cy="12" r="2"/>
       <line x1="4" y1="18" x2="20" y2="18"/><circle cx="11" cy="18" r="2"/>
     </symbol>
+    <symbol id="icon-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 9l6 6 6-6"/>
+    </symbol>
     <symbol id="icon-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
       <path d="M12 3a5 5 0 0 0-5 5v3.5c0 .8-.3 1.6-.9 2.2L5 15h14l-1.1-1.3c-.6-.6-.9-1.4-.9-2.2V8a5 5 0 0 0-5-5z"/>
       <path d="M9.5 18a2.5 2.5 0 0 0 5 0"/>
@@ -2209,7 +2271,8 @@
       <li><a href="#studio" data-nav><span class="n">03</span>Brand &amp; Creative</a></li>
       <li><a href="#approach" data-nav><span class="n">04</span>Approach</a></li>
       <li><a href="#process" data-nav><span class="n">05</span>Process</a></li>
-      <li><a href="#contact" data-nav><span class="n">06</span>Contact</a></li>
+      <li><a href="#faq" data-nav><span class="n">06</span>FAQ</a></li>
+      <li><a href="#contact" data-nav><span class="n">07</span>Contact</a></li>
     </ul>
     <a href="#contact" class="btn btn-primary nav-cta">Start a project &rarr;</a>
     <div class="lang-toggle" role="group" aria-label="Language / اللغة">
@@ -2769,7 +2832,7 @@
                 <span>Paid ad campaigns &mdash; managed month to month</span>
               </div>
             </div>
-            <p class="cred-note">Both sides of the business, for the same client, from the same team.</p>
+            <p class="cred-note">MediLink360 FZ-LLC runs on what we built together: paid campaigns that bring in the leads, and a CRM that manages each relationship from before the signing through after.</p>
           </div>
 
           <ul class="cred-commit" data-stagger>
@@ -2849,6 +2912,40 @@
               <span class="tl-track mk"><span class="tl-dot"></span>Campaign &amp; content performance</span>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="max-content" data-reveal>
+        <p class="eyebrow">Questions</p>
+        <h2>What people ask before they start</h2>
+
+        <div class="faq" data-stagger>
+          <details class="faq-item">
+            <summary><span class="faq-q">Why work with a new company instead of an established agency?</span><span class="faq-icon"><svg class="icon" aria-hidden="true"><use href="#icon-chev"/></svg></span></summary>
+            <p class="faq-a">Because you get direct, founder-led attention that gets harder to get once an agency has dozens of accounts. We're building our track record with the partners who join us now &mdash; which means your project gets full focus, not a fraction of someone's time split across ten other clients.</p>
+          </details>
+          <details class="faq-item">
+            <summary><span class="faq-q">How do you handle my data?</span><span class="faq-icon"><svg class="icon" aria-hidden="true"><use href="#icon-chev"/></svg></span></summary>
+            <p class="faq-a">Your CRM data and ad accounts stay yours. We build in your own infrastructure and campaign accounts wherever possible, not ours, so you're never locked into KEB to keep access to your own information.</p>
+          </details>
+          <details class="faq-item">
+            <summary><span class="faq-q">How does pricing work?</span><span class="faq-icon"><svg class="icon" aria-hidden="true"><use href="#icon-chev"/></svg></span></summary>
+            <p class="faq-a">A fixed price for the build &mdash; CRM, website, app, or campaign setup &mdash; agreed before work starts, so there's no hourly billing or surprise invoices. Once it's live, ongoing maintenance and management run on a straightforward subscription.</p>
+          </details>
+          <details class="faq-item">
+            <summary><span class="faq-q">How fast can you start?</span><span class="faq-icon"><svg class="icon" aria-hidden="true"><use href="#icon-chev"/></svg></span></summary>
+            <p class="faq-a">Usually within a week of an initial call, once we've scoped what you need. Discovery starts right away; building starts once scope and price are agreed.</p>
+          </details>
+          <details class="faq-item">
+            <summary><span class="faq-q">Can I hire you for just one service, like paid ads, without the CRM?</span><span class="faq-icon"><svg class="icon" aria-hidden="true"><use href="#icon-chev"/></svg></span></summary>
+            <p class="faq-a">Yes. Each service stands on its own &mdash; most clients start with one and add the other once they see how the two work together.</p>
+          </details>
+          <details class="faq-item">
+            <summary><span class="faq-q">What happens after launch?</span><span class="faq-icon"><svg class="icon" aria-hidden="true"><use href="#icon-chev"/></svg></span></summary>
+            <p class="faq-a">Support doesn't stop there. Maintenance and management continue under the subscription, so your CRM and campaigns keep running and improving against real data instead of being left as-is once the project ships.</p>
+          </details>
         </div>
       </div>
     </section>
@@ -2936,6 +3033,10 @@
             <a href="#services">Paid ads</a>
             <a href="#services">Branding</a>
             <a href="#services">AI videos</a>
+          </div>
+          <div class="footer-col">
+            <span class="footer-heading">Legal</span>
+            <a href="privacy.html">Privacy Policy</a>
           </div>
           <div class="footer-col">
             <span class="footer-heading">Contact</span>
@@ -3506,13 +3607,15 @@
     ['#approach h2', 'استوديو جديد، مبني ليمنح كل عميل مبكر اهتمامًا كاملًا'],
     ['.approach-body', 'مجموعة KEB الدولية استوديو جديد — أول ما بنيناه، نظام CRM مخصّص لشركة MediLink360 FZ-LLC، يعمل اليوم. ونحن نبني سجلّنا مع كل شريك ينضم إلينا. عمليًا، هذا يعني وصولًا مباشرًا لمن ينفّذون العمل — لا طبقة من مديري الحسابات — وشركة مدفوعة لإثبات نفسها بالنتائج، لا بقائمة عملاء سابقين.'],
     ['.cred-label', 'تعاون قائم'],
-    ['.cred-note', 'جانبا العمل، لنفس العميل، ومن نفس الفريق.'],
+    ['.cred-note', 'تعمل شركة MediLink360 FZ-LLC على ما بنيناه معًا: حملات مدفوعة تجلب العملاء المحتملين، ونظام CRM يدير كل علاقة من قبل التعاقد وحتى ما بعده.'],
 
     ['#process .eyebrow', 'كيف يسير التعاون'],
     ['#process h2', 'من أول مكالمة إلى نمو مستمر'],
     ['.tl-key-item.sw', 'مسار البرمجيات'],
     ['.tl-key-item.mk', 'مسار التسويق'],
 
+    ['#faq .eyebrow', 'أسئلة'],
+    ['#faq h2', 'ما يسأل عنه العملاء قبل البدء'],
     ['#contact .eyebrow', 'تواصل معنا'],
     ['#contact h2', 'أخبرنا بما تريد إصلاحه أو تنميته'],
     ['label[for="f-name"]', 'الاسم'],
@@ -3536,7 +3639,8 @@
       '<span class="n">03</span>الهوية والإبداع',
       '<span class="n">04</span>منهجنا',
       '<span class="n">05</span>مراحل العمل',
-      '<span class="n">06</span>تواصل معنا'
+      '<span class="n">06</span>الأسئلة الشائعة',
+      '<span class="n">07</span>تواصل معنا'
     ], 'html'],
     ['.eco-node text', ['CRM', 'الموقع', 'التطبيق', 'الحملات', 'الهوية', 'المحتوى'], 'text'],
     ['.svc-f', [
@@ -3586,13 +3690,30 @@
       'الإطلاق وتدريب الفريق','انطلاق الحملات',
       'الاستخدام وأرقام المبيعات','أداء الحملات والمحتوى'
     ], 'dot'],
+    ['.faq-q', [
+      'لماذا نتعامل مع شركة جديدة بدل وكالة راسخة؟',
+      'كيف تتعاملون مع بياناتي؟',
+      'كيف يعمل التسعير؟',
+      'ما السرعة التي يمكنكم البدء بها؟',
+      'هل يمكن الاستعانة بكم لخدمة واحدة فقط، كالإعلانات المدفوعة دون CRM؟',
+      'ماذا يحدث بعد الإطلاق؟'
+    ], 'text'],
+    ['.faq-a', [
+      'لأنك تحصل على اهتمام مباشر من المؤسسين، وهو ما يصعب الحصول عليه بعد أن تمتلك الوكالة عشرات الحسابات. نحن نبني سجلّنا مع الشركاء الذين ينضمون إلينا الآن — ما يعني أن مشروعك يحظى بتركيز كامل، لا بجزء من وقت شخص موزّع على عشرة عملاء آخرين.',
+      'بيانات نظامك وحساباتك الإعلانية تبقى ملكك. نبني داخل بنيتك التحتية وحساباتك الإعلانية كلما أمكن، لا داخل حساباتنا، فلا ترتبط بـ KEB للوصول إلى معلوماتك.',
+      'سعر ثابت للبناء — نظام CRM أو موقع أو تطبيق أو إعداد حملات — يُتفق عليه قبل بدء العمل، بلا فوترة بالساعة أو فواتير مفاجئة. وبعد الإطلاق، تسير الصيانة والإدارة على اشتراك واضح.',
+      'عادةً خلال أسبوع من المكالمة الأولى، بعد تحديد نطاق ما تحتاجه. تبدأ مرحلة الاستكشاف فورًا، ويبدأ البناء بعد الاتفاق على النطاق والسعر.',
+      'نعم. كل خدمة قائمة بذاتها — معظم العملاء يبدأون بواحدة ثم يضيفون الأخرى بعد أن يروا كيف تعمل الاثنتان معًا.',
+      'الدعم لا يتوقف عند هذا الحد. تستمر الصيانة والإدارة ضمن الاشتراك، ليظل نظامك وحملاتك تعمل وتتحسّن بناءً على بيانات حقيقية بدل تركها كما هي بعد التسليم.'
+    ], 'text'],
     ['.contact-card .label', ['البريد الإلكتروني','الهاتف','المكتب'], 'text'],
     ['.contact-card address', ['عمارة 11، شقة 14، شارع 233<br>دجلة المعادي، القاهرة، مصر'], 'html'],
     ['#f-need option', ['نظام CRM','موقع إلكتروني','تطبيق جوال','تسويق وإبداع','لست متأكدًا بعد'], 'text'],
-    ['.footer-heading', ['الأنظمة','النمو','تواصل'], 'text'],
+    ['.footer-heading', ['الأنظمة','النمو','قانوني','تواصل'], 'text'],
     ['.footer-col a:not([href^="mailto"]):not([href^="tel"])', [
       'نظام CRM مخصّص','تطوير المواقع','تنفيذ تطبيقات الجوال',
-      'إدارة وسائل التواصل','تحسين محركات البحث','الإعلانات المدفوعة','الهوية البصرية','فيديوهات بالذكاء الاصطناعي'
+      'إدارة وسائل التواصل','تحسين محركات البحث','الإعلانات المدفوعة','الهوية البصرية','فيديوهات بالذكاء الاصطناعي',
+      'سياسة الخصوصية'
     ], 'text'],
     ['.ticker-track span', [
       'مواقع إلكترونية','تطبيقات جوال','هوية بصرية','إعلانات مدفوعة','سوشيال ميديا','تحسين محركات البحث','فيديوهات AI','أنظمة CRM',
