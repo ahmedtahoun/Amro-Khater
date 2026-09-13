@@ -1890,11 +1890,13 @@
   .faq-item summary::marker{content:"";}
   .faq-item summary:focus-visible{outline:2px solid var(--teal); outline-offset:-3px; border-radius:var(--r-lg);}
   .faq-q{
+    margin:0;
     font-family:var(--font-display);
     font-weight:700;
     font-size:1.02rem;
     color:var(--ink);
     line-height:1.4;
+    letter-spacing:-.005em;
   }
   .faq-icon{
     flex-shrink:0;
@@ -2138,6 +2140,62 @@
     color:var(--ink-faint);
   }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why work with a new company instead of an established agency?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because you get direct, founder-led attention that gets harder to get once an agency has dozens of accounts. We're building our track record with the partners who join us now — which means your project gets full focus, not a fraction of someone's time split across ten other clients."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do you handle my data?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Your CRM data and ad accounts stay yours. We build in your own infrastructure and campaign accounts wherever possible, not ours, so you're never locked into KEB to keep access to your own information."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does pricing work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A fixed price for the build — CRM, website, app, or campaign setup — agreed before work starts, so there's no hourly billing or surprise invoices. Once it's live, ongoing maintenance and management run on a straightforward subscription."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How fast can you start?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Usually within a week of an initial call, once we've scoped what you need. Discovery starts right away; building starts once scope and price are agreed."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I hire you for just one service, like paid ads, without the CRM?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Each service stands on its own — most clients start with one and add the other once they see how the two work together."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens after launch?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Support doesn't stop there. Maintenance and management continue under the subscription, so your CRM and campaigns keep running and improving against real data instead of being left as-is once the project ships."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -2923,27 +2981,27 @@
 
         <div class="faq" data-stagger>
           <details class="faq-item">
-            <summary><span class="faq-q">Why work with a new company instead of an established agency?</span><span class="faq-icon"><svg class="icon" aria-hidden="true"><use href="#icon-chev"/></svg></span></summary>
+            <summary><h3 class="faq-q">Why work with a new company instead of an established agency?</h3><span class="faq-icon"><svg class="icon" aria-hidden="true"><use href="#icon-chev"/></svg></span></summary>
             <p class="faq-a">Because you get direct, founder-led attention that gets harder to get once an agency has dozens of accounts. We're building our track record with the partners who join us now &mdash; which means your project gets full focus, not a fraction of someone's time split across ten other clients.</p>
           </details>
           <details class="faq-item">
-            <summary><span class="faq-q">How do you handle my data?</span><span class="faq-icon"><svg class="icon" aria-hidden="true"><use href="#icon-chev"/></svg></span></summary>
+            <summary><h3 class="faq-q">How do you handle my data?</h3><span class="faq-icon"><svg class="icon" aria-hidden="true"><use href="#icon-chev"/></svg></span></summary>
             <p class="faq-a">Your CRM data and ad accounts stay yours. We build in your own infrastructure and campaign accounts wherever possible, not ours, so you're never locked into KEB to keep access to your own information.</p>
           </details>
           <details class="faq-item">
-            <summary><span class="faq-q">How does pricing work?</span><span class="faq-icon"><svg class="icon" aria-hidden="true"><use href="#icon-chev"/></svg></span></summary>
+            <summary><h3 class="faq-q">How does pricing work?</h3><span class="faq-icon"><svg class="icon" aria-hidden="true"><use href="#icon-chev"/></svg></span></summary>
             <p class="faq-a">A fixed price for the build &mdash; CRM, website, app, or campaign setup &mdash; agreed before work starts, so there's no hourly billing or surprise invoices. Once it's live, ongoing maintenance and management run on a straightforward subscription.</p>
           </details>
           <details class="faq-item">
-            <summary><span class="faq-q">How fast can you start?</span><span class="faq-icon"><svg class="icon" aria-hidden="true"><use href="#icon-chev"/></svg></span></summary>
+            <summary><h3 class="faq-q">How fast can you start?</h3><span class="faq-icon"><svg class="icon" aria-hidden="true"><use href="#icon-chev"/></svg></span></summary>
             <p class="faq-a">Usually within a week of an initial call, once we've scoped what you need. Discovery starts right away; building starts once scope and price are agreed.</p>
           </details>
           <details class="faq-item">
-            <summary><span class="faq-q">Can I hire you for just one service, like paid ads, without the CRM?</span><span class="faq-icon"><svg class="icon" aria-hidden="true"><use href="#icon-chev"/></svg></span></summary>
+            <summary><h3 class="faq-q">Can I hire you for just one service, like paid ads, without the CRM?</h3><span class="faq-icon"><svg class="icon" aria-hidden="true"><use href="#icon-chev"/></svg></span></summary>
             <p class="faq-a">Yes. Each service stands on its own &mdash; most clients start with one and add the other once they see how the two work together.</p>
           </details>
           <details class="faq-item">
-            <summary><span class="faq-q">What happens after launch?</span><span class="faq-icon"><svg class="icon" aria-hidden="true"><use href="#icon-chev"/></svg></span></summary>
+            <summary><h3 class="faq-q">What happens after launch?</h3><span class="faq-icon"><svg class="icon" aria-hidden="true"><use href="#icon-chev"/></svg></span></summary>
             <p class="faq-a">Support doesn't stop there. Maintenance and management continue under the subscription, so your CRM and campaigns keep running and improving against real data instead of being left as-is once the project ships.</p>
           </details>
         </div>
