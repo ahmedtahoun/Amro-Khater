@@ -7,6 +7,10 @@
 <meta name="description" content="How KEB International Group collects, uses, and protects personal data, and the rights you have under Egypt's Personal Data Protection Law (Law No. 151 of 2020).">
 <meta name="robots" content="index, follow">
 
+<link rel="alternate" hreflang="en" href="https://kebinternational.com/privacy.html">
+<link rel="alternate" hreflang="ar" href="https://kebinternational.com/privacy-ar.html">
+<link rel="alternate" hreflang="x-default" href="https://kebinternational.com/privacy.html">
+
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="KEB International Group">
 <meta property="og:title" content="Privacy Policy &mdash; KEB International Group">
@@ -22,7 +26,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
   :root{
@@ -79,7 +83,7 @@
   }
   .bar-inner{
     display:flex; align-items:center; justify-content:space-between;
-    gap:16px; padding:16px 0;
+    gap:14px; padding-block:16px; flex-wrap:wrap;
   }
   .wordmark{
     font-family:var(--font-display); font-weight:700; font-size:1.1rem;
@@ -94,6 +98,10 @@
     transition:color .2s ease, border-color .2s ease;
   }
   .back:hover{color:var(--ink); border-color:var(--ink-faint);}
+  .back.active{color:var(--teal); border-color:var(--teal);}
+  /* Arabic never takes the mono face or any tracking - it breaks the joins */
+  .back[lang="ar"]{font-family:"IBM Plex Sans Arabic", var(--font-body); letter-spacing:0;}
+  .bar-links{display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
 
   main{padding:64px 0 72px;}
   .eyebrow{
@@ -149,7 +157,11 @@
 <header class="bar">
   <div class="wrap bar-inner">
     <a href="index.html" class="wordmark">KEB <span class="t">International</span> Group</a>
-    <a href="index.html" class="back">&larr; Back to site</a>
+    <div class="bar-links">
+      <a href="privacy.html" class="back active" aria-current="page">English</a>
+      <a href="privacy-ar.html" class="back" lang="ar" hreflang="ar" dir="rtl">&#1575;&#1604;&#1593;&#1585;&#1576;&#1610;&#1577;</a>
+      <a href="index.html" class="back">&larr; Back to site</a>
+    </div>
   </div>
 </header>
 

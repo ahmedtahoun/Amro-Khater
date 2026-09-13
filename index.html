@@ -2092,6 +2092,51 @@
     .sticky-cta{transition:none;}
   }
 
+  /* ---------- cookie consent ---------- */
+  .consent{
+    position:fixed;
+    left:16px; right:16px; bottom:16px;
+    z-index:160;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+    flex-wrap:wrap;
+    max-width:820px;
+    margin-inline:auto;
+    padding:18px 22px;
+    background:rgba(18,24,31,.96);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    border:1px solid var(--line);
+    border-radius:var(--r-lg);
+    box-shadow:0 26px 60px -24px rgba(0,0,0,.85);
+    transform:translateY(14px);
+    opacity:0;
+    transition:opacity .3s var(--ease), transform .3s var(--ease);
+  }
+  .consent.is-in{opacity:1; transform:translateY(0);}
+  .consent-text{
+    margin:0;
+    flex:1;
+    min-width:240px;
+    font-size:.88rem;
+    line-height:1.6;
+  }
+  .consent-text a{color:var(--teal);}
+  .consent-actions{display:flex; gap:10px; flex-shrink:0;}
+  .consent .btn{padding:11px 20px; font-size:.78rem;}
+  @media (max-width:620px){
+    .consent{left:10px; right:10px; bottom:10px; padding:16px 18px; gap:14px;}
+    .consent-actions{width:100%;}
+    .consent-actions .btn{flex:1; justify-content:center;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .consent{transition:none;}
+  }
+  /* the sticky CTA would sit under the banner, so it waits its turn */
+  body.consent-open .sticky-cta{transform:translateY(110%);}
+
   .footer-main{
     max-width:var(--content-max);
     display:grid;
@@ -2101,7 +2146,52 @@
     border-bottom:1px solid var(--line);
   }
   @media (min-width:760px){
-    .footer-main{grid-template-columns:1.5fr 1fr 1fr .8fr 1.2fr; gap:26px;}
+    /* ---------- cookie consent ---------- */
+  .consent{
+    position:fixed;
+    left:16px; right:16px; bottom:16px;
+    z-index:160;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+    flex-wrap:wrap;
+    max-width:820px;
+    margin-inline:auto;
+    padding:18px 22px;
+    background:rgba(18,24,31,.96);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    border:1px solid var(--line);
+    border-radius:var(--r-lg);
+    box-shadow:0 26px 60px -24px rgba(0,0,0,.85);
+    transform:translateY(14px);
+    opacity:0;
+    transition:opacity .3s var(--ease), transform .3s var(--ease);
+  }
+  .consent.is-in{opacity:1; transform:translateY(0);}
+  .consent-text{
+    margin:0;
+    flex:1;
+    min-width:240px;
+    font-size:.88rem;
+    line-height:1.6;
+  }
+  .consent-text a{color:var(--teal);}
+  .consent-actions{display:flex; gap:10px; flex-shrink:0;}
+  .consent .btn{padding:11px 20px; font-size:.78rem;}
+  @media (max-width:620px){
+    .consent{left:10px; right:10px; bottom:10px; padding:16px 18px; gap:14px;}
+    .consent-actions{width:100%;}
+    .consent-actions .btn{flex:1; justify-content:center;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .consent{transition:none;}
+  }
+  /* the sticky CTA would sit under the banner, so it waits its turn */
+  body.consent-open .sticky-cta{transform:translateY(110%);}
+
+  .footer-main{grid-template-columns:1.5fr 1fr 1fr .8fr 1.2fr; gap:26px;}
   }
   .footer-brand .wordmark{font-size:1.1rem; white-space:normal; display:block; margin-bottom:8px;}
   .footer-brand .tagline{margin:0 0 18px; max-width:34ch;}
@@ -3109,6 +3199,14 @@
         </div>
       </footer>
 
+      <div class="consent" id="consent" role="dialog" aria-modal="false" aria-labelledby="consentText" hidden>
+        <p class="consent-text" id="consentText">We use analytics cookies to see how the site is used. Decline and nothing is tracked &mdash; the site works exactly the same. <a href="privacy.html">Privacy policy</a></p>
+        <div class="consent-actions">
+          <button type="button" class="btn btn-secondary consent-no" id="consentNo">Decline</button>
+          <button type="button" class="btn btn-primary consent-yes" id="consentYes">Accept</button>
+        </div>
+      </div>
+
       <div class="sticky-cta" id="stickyCta" aria-hidden="true">
         <span class="sticky-cta-text">Systems &amp; campaigns</span>
         <a href="#contact" class="btn btn-primary" tabindex="-1">Start a project &rarr;</a>
@@ -3606,6 +3704,7 @@
       headers: { "Accept": "application/json" }
     }).then(function(res){
       if (res.ok){
+        if (analyticsOn && typeof window.gtag === "function") window.gtag("event", "generate_lead");
         status.textContent = t("ok");
         status.className = "form-status ok";
         form.reset();
@@ -3621,6 +3720,54 @@
     });
   });
 
+  /* ---------- consent-gated analytics ----------
+     The published privacy policy says tracking runs on consent, so nothing
+     loads until the visitor accepts. Drop the real GA4 id in below; until
+     then the loader deliberately no-ops. */
+  var GA_ID = "G-XXXXXXXXXX";
+  var analyticsOn = false;
+
+  function loadAnalytics(){
+    if (analyticsOn) return;
+    if (GA_ID.indexOf("XXXX") !== -1) { analyticsOn = true; return; } // not configured yet
+    analyticsOn = true;
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function(){ window.dataLayer.push(arguments); };
+    window.gtag("js", new Date());
+    window.gtag("config", GA_ID, { anonymize_ip: true });
+  }
+
+  var consentEl = document.getElementById("consent");
+  var consentChoice = null;
+  try { consentChoice = localStorage.getItem("keb-consent"); } catch(e){}
+
+  function setConsent(value){
+    try { localStorage.setItem("keb-consent", value); } catch(e){}
+    if (consentEl){
+      consentEl.classList.remove("is-in");
+      document.body.classList.remove("consent-open");
+      setTimeout(function(){ consentEl.hidden = true; }, reduceMotion ? 0 : 320);
+    }
+    if (value === "granted") loadAnalytics();
+  }
+
+  if (consentChoice === "granted"){
+    loadAnalytics();
+  } else if (!consentChoice && consentEl){
+    consentEl.hidden = false;
+    document.body.classList.add("consent-open");
+    requestAnimationFrame(function(){ consentEl.classList.add("is-in"); });
+  }
+
+  var yes = document.getElementById("consentYes");
+  var no = document.getElementById("consentNo");
+  if (yes) yes.addEventListener("click", function(){ setConsent("granted"); });
+  if (no) no.addEventListener("click", function(){ setConsent("denied"); });
+
   /* ---------- bilingual EN / AR ----------
      Arabic copy is a first draft and should be reviewed by a native speaker
      before launch. The product demo inside the hero stays in English on
@@ -3630,6 +3777,8 @@
     ['.tagline', 'بناة المنظومات المتكاملة — برمجيات وتسويق رقمي · القاهرة'],
     ['.nav-cta', 'ابدأ مشروعك'],
     ['.sticky-cta-text', 'أنظمة وحملات'],
+    ['#consentYes', 'موافق'],
+    ['#consentNo', 'رفض'],
     ['.sticky-cta .btn', 'ابدأ مشروعك'],
 
     ['#overview .eyebrow', 'مجموعة KEB الدولية — القاهرة، مصر'],
@@ -3786,6 +3935,7 @@
   var AR_HTML = [
     ['.hero h1', 'أنظمة تُدير أعمالك. <em>وحملات</em> تُنمّيها.'],
     ['#pipelineChip', '<span class="lbl">سجل:</span><span class="stage" data-stage="0">عميل محتمل</span><span class="arrow">&larr;</span><span class="stage" data-stage="1">جهة اتصال</span><span class="arrow">&larr;</span><span class="stage" data-stage="2">صفقة</span><span class="arrow">&larr;</span><span class="stage" data-stage="3">عميل</span>'],
+    ['#consentText', 'نستخدم ملفات تعريف الارتباط التحليلية لمعرفة كيفية استخدام الموقع. عند الرفض لا يتم تتبّع أي شيء &mdash; ويعمل الموقع بالطريقة نفسها تمامًا. <a href="privacy-ar.html">سياسة الخصوصية</a>'],
     ['.cta-row .btn-secondary', '<span class="btn-play"><svg class="icon" aria-hidden="true"><use href="#icon-video"/></svg></span>شاهد ما نبنيه'],
     ['.svc-flow', '<span>عميل محتمل</span><span class="svc-flow-a">&larr;</span><span>جهة اتصال</span><span class="svc-flow-a">&larr;</span><span>صفقة</span><span class="svc-flow-a">&larr;</span><span class="svc-flow-end">عميل</span>']
   ];
@@ -3857,6 +4007,14 @@
           el.textContent = val;
         }
       });
+    });
+
+    /* The privacy policy is a separate document per language, so the links have
+       to move with the toggle - a translated label pointing at the English page
+       is worse than no translation at all. */
+    document.querySelectorAll('a[href="privacy.html"], a[href="privacy-ar.html"]').forEach(function(a){
+      a.setAttribute('href', ar ? 'privacy-ar.html' : 'privacy.html');
+      a.setAttribute('hreflang', ar ? 'ar' : 'en');
     });
 
     // strings owned by JS
